@@ -1,24 +1,3 @@
-// ex15) 
-// 값이 같은가?
-console.log(10==10); // true
-// 값과 타입이 같은가?
-console.log(10===10); // true
-
-console.log(10=='10'); // true
-console.log(10==='10'); // false
-
-console.log(10===10.0); // true
-
-console.log(7/4); // 1.75 >> 자바와 달리 정확한 값이 출력됨
-console.log(7%4); // 3
-
-// 셋다 문자열 취급 
-console.log('한글');
-console.log("한글'과'컴퓨터"); // 문자열안에서 ''를 문자로 표현하고 싶을 때
-let t = 999;
-console.log(`한${t}글`); // 외부에 있는 변수를 문자열 안에서 출력하고 싶을 때
-
-/*
 // 실행 단축키: ctrl + f5
 // 주석: ctrl + /
 // 파일이나 폴드 리네임: f2
@@ -206,4 +185,110 @@ console.log(d);
 // 자바에서
 // int b = 0077; error x
 // int a = 0386; error 맨앞이 0이면 8진수 취급-> 8은 들어갈 수 없다. 
-*/
+
+// ex15) 
+// 값이 같은가?
+console.log(10==10); // true
+// 값과 타입이 같은가?
+console.log(10===10); // true
+
+console.log(10=='10'); // true
+console.log(10==='10'); // false
+
+console.log(10===10.0); // true
+
+console.log(7/4); // 1.75 >> 자바와 달리 정확한 값이 출력됨
+console.log(7%4); // 3
+
+// 셋다 문자열 취급 
+console.log('한글');
+console.log("한글'과'컴퓨터"); // 문자열안에서 ''를 문자로 표현하고 싶을 때
+let t = 999;
+console.log(`한${t}글`); // 외부에 있는 변수를 문자열 안에서 출력하고 싶을 때
+
+// ex16)
+// 문자열안에 태그를 표현할 수 있다. 
+let str = '<h3>호랑이</h3>'; // '\n', '\t' 탭 처리 
+
+let first = 'tiger';
+let last = 'lion';
+
+console.log(`My name is ${first} and ${last}`);
+console.log(`${1+2}`);
+let a = 3; 
+let b = 4;
+console.log(`${a}+${b}=${a+b}`);
+
+// ex17) SYMBOL 타입
+
+// 1.
+let obj1 = {
+    a : 10,
+}
+// 실행시간에 필요에 따라서 키값을 추가 할수 있다. 
+obj1.b = 20;
+console.log(obj1.a);
+console.log(obj1.b);
+
+// 2.
+let obj2 = {
+    a : 10,
+}
+// 실행시간에 필요에 따라서 키값을 추가 할수 있다. 
+obj2['b'] = 20;
+console.log(obj2['a']);
+console.log(obj2['b']);
+
+// 3. 라이브러리로 제공된 객체일 때
+let obj3 = {
+    a: 10,
+    b: 20
+}
+
+obj3['b'] = 30;
+console.log(obj3['b']);
+
+// 4. 
+let obj4 = {
+    a:10,
+    b:20,
+    myfunc:function(){
+        return this.a + this.b;
+    }
+};
+console.log("---------------------");
+// 키를 새로 만들었다고 생각하고 작성했다. 
+obj4['b'] = 30;
+console.log(obj4['b']); // 30
+console.log(obj4.myfunc(),obj4['b']); // 40 30
+
+// 5.
+let obj5 = {
+    a:10,
+    b:20,
+    myfunc:function(){
+        return this.a + this.b;
+    }
+};
+
+let b = Symbol('b'); // 심볼타입이다.
+obj5[b] = 999; // 중복 키 없이 사용하게 되는 변수가 만들어짐
+console.log(obj5.myfunc()); // 30
+console.log(obj5['b']); // 20
+console.log(obj5[b]);  // 999
+
+let obj6 = {
+    a:20,
+    b:30,
+    // 함수가 사용하게 되었을 때
+    // 실행시간으로 변경되는 결과에 대하여
+    // 어떻게 예측할 수 있는가? 
+};
+ 
+obj6['b'] = 10;
+
+// ex18)
+
+let str = 'apple';
+
+console.log(str.length);
