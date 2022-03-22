@@ -290,5 +290,492 @@ obj6['b'] = 10;
 // ex18)
 
 let str = 'apple';
-
 console.log(str.length);
+
+let n = new Date();
+console.log(typeof(n)); // object
+console.log(typeof(Date)); // function
+console.log(typeof n);
+
+console.log(n.getFullYear(), '년');
+console.log(n.getMonth(), '월'); // 월은 0부터 출발
+console.log(n.getDate(), '일');
+console.log(n.getDate(), '일');
+//0이 일요일
+console.log(n.getDay(),'요일');
+console.log(n.getHours(),'시');
+console.log(n.getMinutes(),'분');
+console.log(n.getSeconds(),'초');
+
+// ex19) Date()를 이용하여 1초동안 for문의 반복횟수를 얻는다.
+let start = new Date().getTime();
+// start + 1000 >> 1초
+// 지역변수 얻고자 var사용
+for (var i = 0; new Date().getTime() < start+1000; i++) {
+}
+console.log(i);
+
+// ex20)
+
+// 1
+let start = new Date().getTime();
+console.log(start);
+while(new Date().getTime() < start+ 1000);
+console.log('end');
+
+// 2
+// 인수 전달할 때 타입 선언 불필요
+function fu(num){
+    console.log(num);
+}
+fu(500);
+// 함수 이름 빼버리기 >> 즉시 실행 함수 (만들고 호출하고 치워버리기, 두번사용x)
+(function (num){
+    console.log(num);
+})() // 즉시 실행 함수 실행
+
+(function(num){
+    console.log(num);
+})(1000);
+
+// 3 
+// 시간 지연 함수
+(function(num){
+    console.log("시간지연시작",num/1000);
+    let start = new Date().getTime();
+    while(new Date().getTime() < start+ num);
+})(3000);
+
+console.log('end');
+
+// ex21) 짧은 if문
+
+if(true){
+    console.log('100');
+}
+let num = 10;
+num > 7 && console.log('100');
+
+// true
+if(!false) {
+    console.log('20');
+}
+
+// (num>20) || console.log('30');
+false || console.log('30');
+
+// ex22) 함수를 나타내는 다양한 형태
+// 1. 
+f1(); // 호출을 먼저 해버림 >> 함수를 호이스팅 할 수 있다. 
+function f1(){
+    console.log('1');
+}
+
+// 2. 함수를 변수로 받아버림 
+let f2 = function() {
+    console.log('2');
+}
+f2(); // 호이스팅 할 수 없다. 
+
+// 3. 람다 함수
+let f3 = () =>{
+    console.log('3');
+}
+f3();
+
+// 4. 즉시 실행 함수(IIFE)
+(function(){
+    console.log('4');
+})();
+
+// 5. IIFE + 람다 
+(()=>{
+    console.log('4');
+})();
+
+// 6. 람다 인수 전달
+((num)=>{
+    console.log(num);
+})(6);
+
+// 7. 리턴 처리
+let result = ((num)=>{
+    return num * 10;
+})(6);
+
+// 8. 첫자가 대문자로 출발한다. 
+// 생성자 함수(== 클래스) 
+function F4() {
+    this.name = '호랑이'
+    this.age = 100
+
+    this.f1 = function(){
+        console.log(this.name);
+    }
+
+    this.f2 = ()=>{
+        console.log(this.age);
+    }
+}
+
+let obj = new F4();
+obj.f1();
+obj.f2();
+console.log(obj.name, obj.age);
+obj.name
+
+// ex23)
+function t1() {
+    console.log('t1');
+}
+function t2(num){
+    console.log(num);
+}
+t2(10);
+function t3(){
+    return 100;
+}
+console.log(t3());
+function t4(num){
+    return num * 10;
+}
+console.log(t4(10));
+
+// ex24)
+
+// 1.
+let count = {
+    num: 0,
+    increase: function(){
+        this.num++;
+        console.log(this.num);
+    }
+}
+console.log(count.num);
+count.increase();
+
+// 2.
+let person = {
+    name:'tiger',
+    sayHello:function(){
+        console.log(`${this.name}`);
+    }
+}
+person.sayHello();
+console.log(person);
+console.log('end');
+
+// 3. 
+let empty = {
+
+}
+
+// 4. 속성을 ''으로 정의할 수 있다.
+let obj01 = {
+    'name': 'tiger', // 특수문자 없다면 '' 안써도됨
+    'age': 10,
+}
+console.log(obj01.name, obj01.age); // tiger 10
+
+// 5.
+let obj02 = {};
+let key = 'hello';
+obj02[key] = 'world';
+console.log(obj02.hello);
+console.log(obj02);
+
+// 6. 키 이름을 숫자로 정의하면 자동으로 문자열 처리됨
+let obj03 = {
+    0:10,
+    1:20,
+    '2':30,
+};
+// console.log(obj03.0); 안된다.
+// console.log(obj03,'0'); 안된다.
+// 둘다 된다. 
+console.log(obj03[0]);
+console.log(obj03['0']);
+
+// 7. 가장 나중에 정의된 속성으로 된다. 
+// 속성 사용 방법 2가지
+let obj04 = {
+    age:10,
+    age:20,
+}
+console.log(obj04);
+console.log(obj04.age, obj04['age']);
+// 익셉션 발생
+// console.log(obj04[age]);
+
+// 8.
+let obj05 = {
+    a:10,
+};
+// 속성 갱신
+obj05.a = 20;
+// 속성 생성
+obj05.b = 30;
+// 속성 삭제
+delete obj05.a;
+
+console.log(obj05);
+
+// 9. 
+let x=3, y=4;
+let obj06 = {
+    x:x, // 속성:값
+    y:y,
+}
+console.log(obj06.x, obj06.y);
+
+// 10. xx: yy: 생략가능
+let xx=5, yy=6;
+let obj07 = {
+    xx,
+    yy,
+}
+console.log(obj07);
+
+// 11.
+let xxx=5, yyy=6;
+let obj08 = { xxx, yyy,}
+console.log(obj08);
+
+// 12.  
+let prefix = 'prop';  
+let ct = 0;
+let obj09 = {};
+obj09['prop-0'] = 0;
+obj09[prefix+'-'+ ++ct] = 0;
+for (let i = 2; i < 5; i++) {
+    obj09[prefix + '-'+i] = 0;
+}
+console.log(obj09);
+
+// 13. 12번 연장 예제
+// 대충 버리는 문법
+let obj10 = {
+    [`${prefix}-${ct}`]: 99,
+}
+console.log(obj10);
+
+function ff(){
+
+}
+// 14.
+let obj11 = {
+    // 메소드(new를 이용해서 객체로 생성할 수 있다.)
+    // 생성자 함수로서의 역할을 할 수 있다.
+    f1:function(){
+        console.log(`1`);
+    },
+    // 메소드 (new를 이용해서 객체로 생성할 수 없다.)
+    f2(){
+        console.log(`2`);
+    }
+}
+let tt10 = new obj11.f1();
+let tt11 = new obj11.f2();
+
+// ex25) 가변 인수 함수
+function f1() {
+    console.log(typeof arguments);
+    console.log(arguments.length);
+
+    let sum = 0;
+    for (const key in arguments) {
+        console.log(key, arguments[key]);
+        sum += arguments[key];
+    }
+    console.log(sum);
+}
+
+//f1(10);
+//f1(10,20);
+f1(77,88,99);
+
+// ex26) 내부 함수
+// 1.
+let f1 = function(){
+    console.log('1');
+    let f2 = function(){
+        console.log('2');
+    }
+    f2();
+}
+f1();
+
+// 2. 함수를 리턴한다.
+let f3 = function(){
+    console.log('1');
+    return function(){
+        console.log('2');
+    }
+}
+f3()();
+
+// 3.
+let f4 = function(a, b) {
+    console.log(a+b);
+    return function(c,d,e) {
+        console.log(c+d+e);
+    }
+}
+f4(10, 20)(10, 20, 30);
+
+// 4.
+let f5 = function(a){
+    a();
+    return function(c){
+        c();
+    }
+}
+f5(function(){
+    console.log(99);
+})(function(){
+    console.log(100);
+});
+
+// ex27) cf >> callback 함수
+let f1 = function(cf){
+    cf();
+}
+let f2 = function(){
+    console.log('f2 call');
+}
+// 1. 
+f1(f2);
+
+// 2.
+f1(function(){
+    console.log('ex2');
+})
+
+// 3.
+f1(()=>{
+    console.log('ex3');
+})
+
+// 4.
+const f3 = function(){
+    console.log('1');
+    const f4 = function(){
+        console.log('2');
+    };
+    // return f4(); // 주의
+    return f4; 
+}
+f3()();
+
+// 5.
+const f5 = function(){
+    console.log('1');
+    return function(){
+        console.log('2');
+    };
+};
+f5()();
+
+// ex28)
+// 1.
+(function(){
+    console.log('1');
+    return function(){
+        console.log('2');
+    };
+})()();
+
+// 2. 
+(()=>{
+    console.log('1');
+    return()=>{
+        console.log('2');
+    }
+})()();
+
+// 3. 
+((cf)=>{
+    cf();
+    console.log('1');
+    return(cf1)=>{
+        cf1();
+        console.log('2');
+    }
+})(()=>{
+    console.log('tiger');
+})(()=>{
+    console.log('lion');
+});
+
+
+// ex29)
+// 1.
+let c1 = function(a) { return a*10; }
+console.log(c1(2));
+
+// 2. 람다 수정
+let c2 = (a) => { return a*10; }
+console.log(c2(2));
+
+// 3. 인수 전달이 1개일 떄 괄호 생략 가능
+let c3 = a => { return a*10; }
+console.log(c3(2));
+
+// 4. 람다에서 return 단문장일때 return을 생략할 수 있다.
+// 단, {}도 같이 생략해야 한다.
+let c4 = a => a*10;
+console.log(c4(2));
+
+let c5 = function(){
+    return 100;
+    return 'tiger';
+    return ()=>{};
+    return {a:10, b:20};
+}
+let obj01 = c5();
+console.log(obj01.a, obj01.b);
+
+let c6 = () => {
+    return {a:10, b:20};
+}
+// return 과 {}빼고 나니까 남아있는 {}가 함수의 {}인지 
+// 객체의 {}인지 모호한 사항이 발생
+let c7 = () => ({a:10, b:20});
+let obj02 = c7();
+console.log(obj02.a, obj02.b);
+
+// ex30)
+// 1. 기본 함수 정의
+(a)=>{};
+// 2. 실제 실행 코드
+((a)=>{})();
+// 3. a, b둘다 실행
+((a)=>{
+    console.log('1');
+    ((b)=>{
+        console.log('2');
+    })();
+})();
+// 4.
+((a)=>{((b)=>{})();})();
+// 5. 즉시 실행을 안한다고 한다면
+((a)=>{((b)=>{
+    console.log(a+b);
+})(10);})(20);
+// 6. 
+let c1 = (a)=>{(b)=>{console.log(a+b);}};
+// 7.
+let c2 = (a) => {(b)=>{}};
+// 8.
+let c8 = a => {b=>{}};
+// 9.
+// let c4 = a =>b => a+b;
+// let c4 = (a) => (b) => a+b;
+// let c4 = (a) => (b) => {return a+b};
+// let c4 = (a) => {return(b)=>{return a+b}};
+let c4 = (a) =>{
+    return (b)=>{
+        return a+b;
+    }
+}
+console.log(c4(10)(20));
