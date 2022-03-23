@@ -779,3 +779,451 @@ let c4 = (a) =>{
     }
 }
 console.log(c4(10)(20));
+
+// ex31) 클로저 함수
+const f1 = function(){
+    let a = 100; // 지역변수를 생명연장 시킨다.
+    return function(){
+        console.log(a);
+    }
+}
+f1()();
+
+// ex32) setTimeout
+// - 비동기 함수: 코드의 실행순서를 지키지 않는 함수
+console.log('1');
+// 비동기 함수가 없으면 함수가 블로킹
+// 비동기 함수를 동기화 시킨다.
+setTimeout(
+function(){
+    console.log('2');
+},2000);
+console.log('3');
+
+// ex33) setInterval
+console.log('1');
+let id = setInterval(
+    function(){
+        console.log('2');
+    },1000);
+// setTimeout(function(){
+//     clearInterval(id);
+// },5600)
+setTimeout(
+    ()=>{
+    // 버튼이 클릭되었을 때
+    clearInterval(id);
+    },
+    5600
+);
+console.log('3');
+
+// ex34)
+console.log('test');
+
+1.
+for(var i=0; i<3; i++){
+    setTimeout(()=>{
+        console.log(i);
+    },1000);
+}
+
+2. 
+for(var i=0; i<3; i++){
+    (function(num){
+        setTimeout(
+            ()=>{
+                console.log(num);
+            }, 1000
+        );
+    })(i);
+}
+
+// 3.
+for(let i=0; i<3; i++){
+    setTimeout(()=>{
+        console.log(i);
+    },i*1000);
+}
+
+// ex35) eval():문자열을 코드로 해석해서 실행해주는 함수
+let str='';
+str += 'let a = 10;';
+str += 'console.log(a)';
+
+eval(str);
+
+// client >> 문자열을 만든다 (js 코드를 만든다) >> 서버에 날린다
+// 문자열을 받았다 >> eval을 이용해서 실행결과를 만들 수 있다 client
+// 실행결과를 >> 클라이언트에 전송
+
+//     배열             객체
+// 1.   []               {}
+// 2. index사용    속성(key:value)
+// 3. forEach가능    forEach불가
+// 4. length가능      length불가
+
+// ex36)
+let obj = {
+    s:'tiger',
+    n:10,
+    b:true,
+}
+console.log(obj);
+console.log(obj.s, obj,n, obj.b);
+console.log(obj['s'], obj['n'], obj['b']);
+
+// 출력 순서가 보장되지 않는다.
+for(const key in obj){
+    console.log(key, obj[key]);
+}
+
+// with 키워드
+with(obj) {
+    console.log(s, n, b);
+}
+
+// ex37)
+const obj = {
+    // obj = this <-> a (바인딩)
+    a:10, 
+    b:20,
+    f1:function(){
+        console.log(this.a, this.b);
+    },
+    // 람다에서 this를 사용할 수 없다. 
+    f2:()=>{
+        console.log(this.a, this.b);
+    },
+    f3:function(){
+        for(const key in this){
+            console.log(key, this[key]);
+        }
+    }
+}
+// obj.f1();
+// obj.f2();
+obj.f3();
+let c = 'dd';
+let apple = {
+    a:10, 
+    b:'tiger',
+    [c]:30
+}
+console.log(apple);
+
+const obj01 = {
+    a:10
+}
+
+obj01.b = 20;
+obj01['c'] = 30;
+
+for (let i = 0; i<3; i++){
+    obj01['lion'+i] = i*10;
+}
+console.log(obj01);
+
+console.log('end');
+
+// ex38)
+const obj = {
+    a:10,
+    b:20,
+}
+console.log(obj);
+
+// 키 값만 얻는다
+console.log(Object.keys(obj));
+
+let a = Object.keys(obj);
+console.log(typeof a);
+console.log(Array.isArray(a));
+
+// value 값만 얻을 수 있다.
+console.log(Object.values(obj)); 
+
+// ex39) 객체 병합
+const obj01 = {
+    a:10,
+    b:20,
+}
+const obj02 = {
+    b:10,
+    d:20,
+}
+
+// 병합 방법1)
+const obj03 = Object.assign(obj01, obj02);
+console.log(obj03);
+
+// 병합 방법2) 90% : spread operator
+const obj04 = {...obj01, ...obj02};
+
+let apple = (banana)=>{
+    console.log(banana);
+}
+
+apple({...obj01, ...obj02});
+
+// ex40)
+// 1.
+let ar = [10, 20, 30];
+console.log(ar); //[10, 20, 30]
+console.log(typeof ar); //object
+console.log(Array.isArray(ar)); // true
+
+// 2. 비어있는 배열
+let br = Array();
+console.log(br.length); // 0
+
+// 3. 
+let cr = Array(5);
+console.log(cr.length); //5
+
+// 4. 
+let dr = Array(40, 50, 60);
+console.log(dr) //[40, 50, 60]
+
+// 5. 모든 타입을 적용할 수 있다.
+let er = [10, 'tiger', true, [], {},function(){},undefined];
+
+// ex41)배열 반복
+let ar = [10, 20, 30];
+
+// for in
+for(const index in ar){
+    console.log(index, ar[index]);
+}
+
+// for of(value, item, v)
+for (const value of ar){
+    console.log(value);
+}
+// forEach 함수를 사용할 수 있다.
+ar.forEach((v,i)=>{
+    console.log(v, i);
+});
+
+// 기존에 가지고 있는 데이터를 가공해서 새로운 데이터를 생산한다.
+let br = ar.map((value)=>{
+    console.log(value);
+    return value * 10;
+});
+console.log(br);
+
+let cr = ar.map(value=>value * 10);
+console.log(cr);
+
+// ex42)
+let ar = [10, 11, 12, 14];
+let br = ar.map(v=>v%2===0?'Even':'Odd');
+console.log(br);
+
+// ex43)
+let ar = [
+    {
+        n:'tiger',
+        a:10,
+    },
+    {
+        n:'lion',
+        a:10,
+    },
+    {
+        n:'cat',
+        a:30,
+    },
+];
+
+console.log(ar);
+for(const index in ar){
+    console.log(ar[index].n, ar[index].a);
+}
+
+for(const v of ar){
+    console.log(v.n, v.a);
+}
+
+ar.forEach((v,i)=>{
+    console.log(v);
+})
+let br = ar.map((v,i)=>{
+    return v.n;
+});
+
+console.log(br);
+
+// ex44) 배열 함수 (*func:스스로 갱신)
+// 1. toString
+let ar = [10, 20, 30, 40];
+let str = ar.toString();
+console.log(str, typeof str);
+
+// 2. 
+let date = new Date();
+console.log(date.toLocaleString());
+
+// 3. pop()* : 맨 마지막 요소가 삭제됨 
+ar.pop();
+console.log(3, ar);
+
+// 4. push()*
+let num = ar.push(20);
+console.log(4, ar, num);
+
+let br = [77,88,99];
+ar.push(br);
+console.log(5, ar); // 배열안에 배열이 들어감 >> 병합이 일어나지 않는다.
+console.log(ar[4]);
+
+// 5. 
+let cr = [10, 20, 30];
+let dr = [40, 50];
+// 스스로는 갱신되지 않는다
+let er = cr.concat(40);
+console.log(cr);
+console.log(er);
+
+let fr = cr.concat(dr);
+console.log(fr);
+
+fr = cr.concat([88,99]);
+console.log(fr);
+
+// 6. join(구분자를 삽입하면서 문자열을 연결한다)
+let gr = ['tiger','lion','cat','dog'];
+console.log(gr.join());
+console.log(gr.join( '+' ));
+
+// 7. reverse()* *>>데이터가 자체적으로 갱신된다
+console.log(gr.reverse());
+
+// 8. shift >> 첫번째 요소 가리킴
+let t1 = gr.shift();
+console.log(t1);
+console.log(gr);
+
+gr.unshift('rose');
+console.log(gr);
+
+// ex45) 배열 정렬
+
+// 주의 : 우연히 정렬된 것 
+let ar = [80, 20, 10, 15];
+console.log(ar);
+ar.sort();
+console.log(ar);
+
+let br = [52, 273, 103, 32];
+console.log(br);
+br.sort();
+// [103, 273, 32, 52]
+console.log(br);
+
+let cr = [99, 52, 13, 42, 66, 21];
+
+// cr.sort(정렬시키는 기준을 함수로 작성);
+cr.sort((a, b)=>{
+    // 내가 함수안에서 직접 정렬하는 것은 아니다
+    // 정렬 기준을 코드로 작성하면 sort가 참고한다
+    // 순차 정렬로 해석한다
+    // if(a>b){
+    //     return +1;
+    // }else {
+    //     return -1;
+    // }
+    // ( a > b ) ? +1 : -1;
+    // 순차 정렬코드
+    (a-b); 
+    // 역순 정렬
+    (b-a);
+});
+console.log(cr)
+// true false대신 함수를 사용하면 응용이 가능함
+
+//
+let dr = [
+    {
+        n:30,
+        s:'월',
+    },
+    {
+        n:20,
+        s:'월',
+    },
+    {
+        n:10,
+        s:'수',
+    }
+]
+
+dr.sort((a, b)=>{
+    return a.n - b.n;
+})
+
+console.log(dr);
+
+console.log('');
+
+// ex46) 배열: slice
+let ar = [1, 2, 3, 4, 5, 6, 7, 8];
+// 2부터 4-1 까지
+let br = ar.slice(2,4);
+console.log(br); // 3, 4
+// slice(시작위치, 삭제 수, 추가항목, 추가항목, ...)
+
+// splice(시작위치, 삭제 수,추가항목, ...)
+let cr = [1, 2, 3];
+cr.splice(1, 0, 4, 5, 6, 7); //[1, 4, 5, 6, 7, 2, 3]
+cr.splice(1, 1, 4, 5, 6, 7); //[1, 4, 5, 6, 7, 3]
+
+// indexOf
+let dr = ['lion','tiger','dog','cat','tiger'];
+console.log(dr.indexOf('tiger')); // 1
+console.log(dr.indexOf('tig')); //-1
+console.log(dr.indexOf('tiger', 2)); // 4
+console.log(dr.lastIndexOf('tiger')); // 4
+
+let er = [1, 30, 39, 29, 10, 13];
+
+function f1(data){
+    return data < 30;
+}
+function f2(data){
+    return data < 0;
+}
+console.log(er.every(f1));
+console.log(er.some(f2));
+
+console.log('');
+let fr = [1, 3, 5, 7];
+console.log(f2.some((value)=>{
+    return value % 2 === 0;
+}));
+
+// ex47) filter
+
+let ar = [1, 30, 38, 29, 10, 13];
+let br = ar.filter((v)=>{
+    return v<30;
+})
+console.log(br); //[1, 29, 10, 13]
+
+let cr = [
+    'tiger',
+    'lion',
+    'dog',
+    'cat',
+    'rose',
+];
+console.log(cr.filter((v)=>{
+    return v.length >= 4
+}));
+
+//         문자열      배열        객체
+// length    o         o           x
+// forEach   x         o           x
+// forin     o         o           o
+// forof     o         o           x
+// map       x         o           x
