@@ -1227,3 +1227,9 @@ console.log(cr.filter((v)=>{
 // forin     o         o           o
 // forof     o         o           x
 // map       x         o           x
+
+// 48) reduce
+// MDN 예제 참조 
+// 속도: 단항연산자 > 산술 연산자
+// if문 -> 단항연산자 사용하는데
+// 삼항연산자 -> 산술 연산자 사용하기에 if문 사용  
