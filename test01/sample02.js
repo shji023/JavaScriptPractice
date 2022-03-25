@@ -374,3 +374,306 @@ function f1(a, b=1000, c='tiger'){
 f1(10);
 f1(10, 2000);
 f1(10, 2000,'lion');
+
+// ex60)
+// 생성자 함수: 클래스로도 가능하다
+// 1.
+function Person(name){
+    this.name = name;
+}
+Person.prototype.f1 = function(){
+    console.log(this.name);
+}
+let p = new Person('tiger');
+p.f1();
+
+// 2.
+function Person(name){
+    this.name = name;
+    Person.prototype.f1 = function(){
+        console.log(this.name);
+    }
+}
+let p = new Person('tiger');
+p.f1();
+
+// 3.
+let Person2 = (function(){
+    function Person(name){
+        this.name = name;
+        Person.prototype.f1 = function(){
+            console.log(this.name);
+        }
+    }
+    return Person;
+})();
+let p = new Person2('tiger');
+p.f1();
+
+// ex61)
+// class Person {
+//     constructor(){
+//         console.log(1);
+//     }
+// }
+// let p  = new Person();
+
+class Person {
+    n3 = 30;
+    constructor(n2){
+        console.log(1);
+        // 생성자 안에서 필드 선언하는 방법
+        this.n1 = 10;
+        this.n2 = n2;
+    }
+}
+let p  = new Person(20);
+console.log(p.n1, p.n2, p.n3); //10 20 30
+
+// ex62) 함수를 선언하는 방법
+class Person {
+    n3 = 30;
+    constructor(n2){
+        console.log(1);
+        this.n1 = 10;
+        this.n2 = n2;
+    }
+    // .프로토타입.함수이름 >> 이 문법과 완전 동격
+    f1(){
+        // this를 생략할 수 없다.
+        console.log(this.n1, this.n2, this.n3);
+    }
+}
+let p  = new Person(20);
+console.log(p.n1, p.n2, p.n3); //10 20 30
+p.f1();
+
+// ex63)
+class Person {
+    n3 = 30;
+    static n4 = 40;
+    constructor(n2){
+        console.log(1);
+        this.n1 = 10;
+        this.n2 = n2;
+    }
+    f1(){
+        console.log(this.n1, this.n2, this.n3);
+    }
+    static f2(){
+        // 필드 사용할 수 없다.
+        console.log('static f2 call', this.n4);
+    }
+}
+let p  = new Person(20);
+console.log(p.n1, p.n2, p.n3);
+p.f1();
+Person.f2(); // 무조건 클래스 이름으로 접근해야함
+
+// ex63-1)
+function Person(){
+    Person.prototype.f1 = function(){
+        console.log('1');
+    }; // prototype함수
+    Person.f2 = function(){
+        console.log('2');
+    }; // static함수
+}
+let p = new Person();
+p.f1();
+Person.f2();
+
+// ex64) 클래스 이름이 리네임이 일어난다.
+let Person2 = class Person {}
+// let p1 = new Person(); // error발생
+let p2 = new Person2(); // 정상 작동
+
+// ex65)
+class Person{
+    constructor(){
+        // default 값
+        // return this;
+        // return {};
+        // return 100; // >> return this;
+        return {a:10, b:20};
+    }
+}
+
+let p = new Person();
+console.log(p);
+
+// ex65-1)
+class Square{
+    static area(w, h){
+        return w * h;
+    }
+}
+console.log(Square.area(3, 4));
+
+class Square{
+    constructor(w, h){
+        this.w = w;
+        this.h = h;
+    }
+    area(){
+        return this.w * this.h;
+    }
+}
+let p = new Square(3, 4);
+console.log(p.area());
+
+// ex66)
+class Person{
+    constructor(firstName, lastName){
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+    get fullName(){
+        console.log('full Name');
+        return `${this.firstName} ${this.lastName}`;
+    }
+    set fullName(name){
+        [this.firstName, this.lastName] = name.split(' ');
+    }
+}
+
+const p = new Person('while', 'tiger');
+console.log(p.firstName, p.lastName);
+console.log(`${p.firstName} ${p.lastName}`);
+console.log(p.fullName);
+p.fullName = 'red lion';
+console.log(p.fullName);
+
+class Person {
+    name='lee';
+    constructor(){
+        console.log(this.name);
+        // this를 빼면 안된다
+        // console.log(name);
+    }
+}
+
+let p = new Person();
+
+// ex67)
+class Person{
+    #name = 'tiger'; // #을 붙이면 private
+    constructor(name){
+        this.#name = name;
+    }
+    get name(){
+        return this.#name;
+    }
+}
+
+let p = new Person('lion');
+console.log(p.name);
+
+// ex67-1)
+class Person{
+    constructor(name){
+        this.#name = name;
+    }
+
+    // 모순적인 코드가 된다.
+    #name = 'tiger';
+    get name(){
+        // 가변적인 코드가 추가될 수 있다.
+        // name이라는 이름을 가공할 수 있다.
+        return this.#name.trim();
+    }
+
+    #age = 10;
+    get age(){
+        return this.#age;
+    }
+}
+
+let p = new Person('lion');
+console.log(p.name);
+
+// ex68)
+class Animal {
+    f1(){
+        return 'f1';
+    }
+    f3(){
+        return 'Animal f3';
+    }
+}
+
+class Bird extends Animal{
+    f2(){
+        return 'f2';
+    }
+    f3(){
+        return 'Bird f3';
+    }
+}
+
+let b = new Bird();
+console.log(b.f1());
+console.log(b.f2());
+console.log(b.f3());
+
+// ex69)
+class Base{
+    constructor(a, b){
+        this.a = a;
+        this.b = b;
+    }
+}
+
+class Derived extends Base{
+    // 디폴트 코드이다.
+    constructor(...args){
+        super(...args);
+        console.log(2);
+    }
+}
+new Derived();
+new Derived(3);
+new Derived(3, 4);
+
+// ex69-1)
+class Base{
+    constructor(a, b){
+        this.a = a;
+        this.b = b;
+    }
+}
+
+class Derived extends Base{
+    // 디폴트 코드이다.
+    constructor(a, b, c){
+        super(a, b+c);
+        console.log(2);
+    }
+}
+new Derived();
+new Derived(3);
+new Derived(3, 4);
+new Derived(3, 4, 5);
+
+// ex70)
+class MyArray extends Array{
+    uniq(){
+        return this.filter(
+            (v,i,self)=>{
+                console.log(v, i, self);
+                return self.indexOf(v) === i;
+            }
+        )
+    }
+    average(){
+        console.log(this.length);
+        // return this.reduce((p, c)=>{
+        //     return p + c,
+        //     0 
+        // });
+        return this.reduce((p,c)=>p+c,0)/this.length;
+    }
+}
+
+const ar = new MyArray(1, 1, 2, 2, 3, 3, 3);
+console.log(ar.uniq());
