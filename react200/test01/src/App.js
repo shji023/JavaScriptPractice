@@ -2,71 +2,31 @@ import React,{Component} from 'react';
 import './App.css';
 
 class App extends Component {
-  // 멤버함수
-  f1() {console.log(1);}
-  f2 = function (){
-    console.log(2);
-  }
-  f3 = () =>{
-
+  num = 10;
+  f1(){console.log(this.num)};
+  f2 = function(){console.log(this.num);};
+  f3 = ()=>{console.log(this.num);}
+  f4(){ // 여기서는 this를 알고있다
+    // function은 왜 this를 모를까
+    // 바인딩 방법1: 바인딩을 시킨다.
+    let temp = this; // temp는 함수 안에서 유효하기에 function에서 쓰면됨
+    (function(){ // 여기서는 this를 모른다
+      // 멤버 num을 제어할 수 있는가? - No. 함수안에서 만들어진 함수는 외부 멤버를 모른다
+      // console.log(this.num); error
+      console.log(temp.num);
+    })();
+    // 바인딩 방법2: 
+    (function(){ 
+      console.log(this.num);
+    }.bind(this))();
+    // 바인딩 방법3:
+    
   }
   render() {
     this.f1();
     this.f2();
     this.f3();
-
-    // 내부 함수
-    // 함수 안에서 함수를 작성할 수 있다.
-    function f4(){
-      console.log(4);
-    }
-    let f5 = function(){
-      console.log(5);
-    }
-    let f6 = ()=>{
-      console.log(6);
-    }
-    f4();
-    f5();
-    f6();
-
-    // 즉시실행함수
-    (function(){
-      console.log(7);
-    })();
-
-    // 객체 함수
-    let obj = {
-      f9:function(){console.log(9)},
-      f10:()=>{console.log(10)},
-      f11(){console.log(11)},
-    }
-
-    obj.f9();
-    obj.f10();
-    obj.f11();
-
-    // 생성자 함수
-    function Person(){
-      this.f12 = function(){
-        console.log(12);
-      }
-      this.f13 = ()=>{
-        console.log(13);
-      }
-      Person.prototype.f14 = function(){console.log(14)};
-      Person.prototype.f15 = ()=>{console.log(15)};
-    }
-    let p = new Person();
-    p.f12(); p.f13(); p.f14(); p.f15();
-
-    class Fruit {
-      f16(){};
-      f17 = function(){console.log(17);};
-      f18 = ()=>{console.log(18);};
-    }
-    let f = new Fruit();
-    f.f16(); f.f17(); f.f18();
+    this.f4();
     return (
       <div>
         
