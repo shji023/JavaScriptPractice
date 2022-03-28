@@ -1,25 +1,46 @@
 import React,{Component} from 'react';
 import './App.css';
 
-// 함수형 컴포넌트 rsf
-function App() {
-  return (
-    <div>
-      <Bpp/>
-      <h1>호랑이</h1>
-      
-    </div>
-  );
+class App extends Component {
+  // 1. 필드
+  num = 10;
+
+  constructor(props){
+    super(props);
+    this.state = {};
+
+    console.log('constructor');
+  }
+  f1(){
+
+  }
+  render(){
+    console.log('render1');
+    return(
+      <div>
+        <h1>App</h1>
+        <Bpp />
+      </div>
+    )
+  }
 }
 
 class Bpp extends Component {
+  constructor(props){
+    super(props);
+    this.state = {};
+
+    console.log('Bpp constructor');
+  }
   render() {
+    console.log('render2');
     return (
       <div>
-        <h1>독수리</h1>
+        
       </div>
     );
   }
 }
+
 
 export default App;
