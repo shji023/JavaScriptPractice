@@ -13,6 +13,10 @@ class App extends Component {
     console.log('getDerivedStateFromProps');
     return {};
   }
+
+  componentDidMount(){
+    console.log('componentDidMount'); // render뒤 실행
+  }
   render(){
     console.log('render1');
     return(
@@ -21,6 +25,7 @@ class App extends Component {
       </div>
     )
   }
+
 }
 
 export default App;
