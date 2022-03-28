@@ -2,29 +2,25 @@ import React,{Component} from 'react';
 import './App.css';
 
 class App extends Component {
-  // 2. 생성자
-  constructor(props){
-    super(props);
-    this.state = {};
+  f1(){
+    let s1 = 'Tiger';
+    let s2 = 'Lion';
 
-    console.log('constructor');
-  }
-  shouldComponentUpdate(props,state){
-    console.log('shouldComponentUpdate');
-    return {};
+    console.log(`${s1} ${s2}`);
+
+    let s3 = '무궁화꽃이피었습니다';
+    console.log(s3.startsWith('무궁화')); // true
+    console.log(s3.includes('무궁화')); // true
+    console.log(s3.endsWith('입니다')); // false
   }
 
   render(){
     console.log('render1');
-    // this.setState({});
     return(
       <div>
         <h1>App</h1>
         <button onClick={()=>{
-          this.setState({});
-        }}>버튼</button>
-        <button onClick={()=>{
-          this.setState({state:this.state+1});
+          this.f1();
         }}>버튼</button>
       </div>
     )
