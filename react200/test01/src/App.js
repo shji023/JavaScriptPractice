@@ -9,19 +9,23 @@ class App extends Component {
 
     console.log('constructor');
   }
-  static getDerivedStateFromProps(props,state){
-    console.log('getDerivedStateFromProps');
+  shouldComponentUpdate(props,state){
+    console.log('shouldComponentUpdate');
     return {};
   }
 
-  componentDidMount(){
-    console.log('componentDidMount'); // render뒤 실행
-  }
   render(){
     console.log('render1');
+    // this.setState({});
     return(
       <div>
         <h1>App</h1>
+        <button onClick={()=>{
+          this.setState({});
+        }}>버튼</button>
+        <button onClick={()=>{
+          this.setState({state:this.state+1});
+        }}>버튼</button>
       </div>
     )
   }
