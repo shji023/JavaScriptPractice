@@ -2,41 +2,29 @@ import React,{Component} from 'react';
 import './App.css';
 
 class App extends Component {
-  num = 10;
   f1(){
-    f2();
-    function f2(){
-      console.log(1);
-    }
-    this.f2();
-    this.f3();
-    this.f4();
-    this.f5();
+    let ar = [1,2,3,4];
+    let br = ar.map( x => x * 2);
+    console.log(br);
   }
-
-  f2() {
-    console.log(2);
-  }
-  f3(){
-    let temp = this;
-    setTimeout(function(){
-      console.log(temp.num+1);
-    },1000);
-  }
-  f4(){
-    setTimeout(function(){
-      console.log(this.num+2);
-    }.bind(this),2000);
-  }
-  f5(){
-    setTimeout(()=>{
-      console.log(this.num+3);
-    },3000);
+  f2(){
+    let ar = [
+      {name:'tiger', age:10},
+      {name:'lion', age:20},
+    ];
+    let br = ar.map((v,i)=>{
+      let obj = {};
+      // obj['tiger'];
+      obj[v.name] = i * v.age + v.age;
+      return obj;
+    });
+    console.log(br);
   }
   render() {
     return (
       <div>
         <button onClick={()=>{this.f1()}}>버튼</button>
+        <button onClick={()=>{this.f2()}}>버튼</button>
       </div>
     );
   }
