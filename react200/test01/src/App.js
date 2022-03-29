@@ -1,20 +1,40 @@
 import React,{Component} from 'react';
-import $ from 'jquery';
 
+// props 부모->자식
+// props 값 갱신x
+// scope 생략 안하는것이 좋음
 class App extends Component {
-  f1(e){
-    console.log('call');
-    let inputText = $('#inputId').val();
-    console.log(inputText);
-  }
   render() {
     return (
       <div>
-        <input id = 'inputId' name='inputName' />
-        <button onClick={(e)=>{}}>버튼</button>
-        <button onClick={(e)=>{this.f1()}}>버튼</button>
+        <h1>App</h1>
+        <Bpp tiger={'test1'}/>
       </div>
     );
+  }
+}
+
+class Bpp extends Component{
+  render(){
+    return (
+      <div>
+        <h1>Bpp</h1>
+        <h1>{this.props.tiger}</h1>
+        <Cpp lion={this.props.tiger+'2'} cat={'test3'}/>
+      </div>
+    )
+  }
+}
+
+class Cpp extends Component{
+  render(){
+    return (
+      <div>
+        <h1>Cpp</h1>
+        <h1>{this.props.lion}</h1>
+        <h1>{this.props.cat}</h1>
+      </div>
+    )
   }
 }
 
