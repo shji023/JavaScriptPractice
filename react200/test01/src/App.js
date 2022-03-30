@@ -1,19 +1,30 @@
 import React,{Component,useEffect,useState} from 'react';
 // 함수 호출에 인수전달이 없다는 전제하에서는 약식 표기법을 사용할 수 있다.
 class App extends Component {
-  f1(){
+  count = 999;
+
+  constructor(props){
+    super(props);
+    this.state={num:10,};
+  }
+  f1=()=>{
     console.log('f1 call');
+    this.state.num += 1;
+    this.count++;
+    this.forceUpdate(); // 함수가 호출되고 render함수를 호출한다.
+    // this.render();
   };
-  f2(){
+  f2=()=>{
     console.log('f2 call');
+    this.setState({num:this.state.num+1});
   }
   render() {
     return (
       <div>
         <h1>App</h1>
         <button onClick={()=>{this.f1()}}>버튼1</button>
-        {/* 약식호출, 람다를 빼고 ()를 뺌 */}
-        <button onClick={this.f2()}>버튼2</button>
+        <h3>{this.state.num}</h3>
+        <h3>{this.count}</h3>
       </div>
     );
   }
