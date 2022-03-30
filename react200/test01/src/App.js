@@ -1,15 +1,12 @@
 import React,{Component} from 'react';
-
-// 1. 값을 전달하지 않는 경우 boolean으로 설정된다.
-// 2. 디폴트 값은 true이다.
-// 3. 받은 값은 삼항연산을  사용할 수 있다.
-// 4. true/false 자체를 출력할때는 toString()을 사용
+import PropsTypes from 'prop-types';
 class App extends Component {
   render() {
+    let a = {t:10, u:20};
     return (
       <div>
         <h1>App</h1>
-        <Bpp a b={false} c={true}/>
+        <Bpp a = {a} b={{x:10, y:20}}/>
       </div>
     );
   }
@@ -17,20 +14,27 @@ class App extends Component {
 
 class Bpp extends Component{
   render(){
-    let {a, b, c} = this.props;
+    let {a, b} = this.props;
     return (
       <div>
-        <h1>{a.toString()}</h1>
-        <h1>{b?'호랑이':'코끼리'}</h1>
-        <h1>{c?'호랑이':'코끼리'}</h1>
-        <h1>{c}</h1>
+        <h1>{a.t} {a.u}</h1>
+        <h1>{b.x} {b.y}</h1>
       </div>
      
     )
   }
 }
 
-
+Bpp.propTypes = {
+  a:PropsTypes.shape({
+    t:PropsTypes.number,
+    u:PropsTypes.number,
+  }),
+  b:PropsTypes.shape({
+    x:PropsTypes.number,
+    y:PropsTypes.number,
+  })
+}
 export default App;
 
 
