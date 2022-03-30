@@ -1,22 +1,36 @@
 import React,{Component,useEffect,useState} from 'react';
 class App extends Component {
-  constructor(props){
-    super(props);
-    this.state={
-      num:10,
-    };
-  }
   render() {
-    let {num} = this.state;
     return (
       <div>
         <h1>App</h1>
-        <h1>{num}</h1>
-        <h3>{this.state.num}</h3>
+        <Bpp tiger="호랑이"></Bpp>
       </div>
     );
   }
 }
+
+class Bpp extends Component {
+  constructor(props){
+    super(props);
+    this.state={
+      num : 10,
+    };
+  }
+
+  render() {
+    let {num, tiger} = this.state;
+    return (
+      <div>
+        <h3>{this.state.num}</h3>
+        <h3>{this.state.tiger}</h3>
+        <h3>{num}</h3>
+        <h3>{tiger}</h3>
+      </div>
+    );
+  }
+}
+
 
 export default App;
 
