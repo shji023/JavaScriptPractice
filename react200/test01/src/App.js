@@ -1,36 +1,36 @@
-import React,{Component} from 'react';
+import React,{Component,useEffect,useState} from 'react';
 class App extends Component {
+  constructor(props){
+    super(props);
+    this.state={
+      num:10,
+    };
+  }
   render() {
+    let {num} = this.state;
     return (
       <div>
         <h1>App</h1>
-        <Bpp><h6>호랑이</h6></Bpp>
+        <h1>{num}</h1>
+        <h3>{this.state.num}</h3>
       </div>
     );
-  }
-}
-
-class Bpp extends Component{
-  render(){
-    console.log(this.props.children);
-    let {children} = this.props;
-    return (
-      <div>
-        <h1>{children}</h1>
-      </div>
-     
-    )
   }
 }
 
 export default App;
 
 
-// function App(props) {
+// function App() {
+//   const[state, setState] = useState('');
+//   useEffect(()=>{
+//     setState('하하');
+//   },[]);
+  
 //   return (
 //     <div>
-//       <h1>App</h1>
-//       <Bpp lion={'lion'} tiger={100}/>
+//       <h1>{state}</h1>
+//       {/* <Bpp lion={'lion'} tiger={100}/> */}
 //     </div>
 //   );
 // }
