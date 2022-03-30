@@ -1,5 +1,5 @@
 import React,{Component,useEffect,useState,PureComponent} from 'react';
-import { shallowEqualObjects } from 'shallow-equal';
+import { shallowEqualArrays, shallowEqualObjects } from 'shallow-equal';
 
 class App extends Component {
   constructor(props){
@@ -17,12 +17,20 @@ class App extends Component {
   f2=()=>{
     this.setState({x:this.state.x+10});
   }
+  f3=()=>{
+    let ar1 = [1, 2, 3];
+    let ar2 = [1, 2, 3];
+    let ar3 = [1, 2, 4];
+    console.log(shallowEqualArrays(ar1, ar2)); // true
+    console.log(shallowEqualArrays(ar1, ar3)); // false
+  }
   render() {
     console.log('render');
     return (
       <div>
         <button onClick={()=>{this.f1()}}>버튼1</button>
         <button onClick={()=>{this.f2()}}>버튼2</button>
+        <button onClick={()=>{this.f3()}}>버튼3</button>
       </div>
     );
   }
