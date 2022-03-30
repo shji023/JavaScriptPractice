@@ -1,62 +1,37 @@
 import React,{Component,useEffect,useState} from 'react';
+// 함수 호출에 인수전달이 없다는 전제하에서는 약식 표기법을 사용할 수 있다.
 class App extends Component {
+  f1(){
+    console.log('f1 call');
+  };
+  f2(){
+    console.log('f2 call');
+  }
   render() {
     return (
       <div>
         <h1>App</h1>
-        <Bpp tiger="호랑이"></Bpp>
-      </div>
-    );
-  }
-}
-
-class Bpp extends Component {
-  constructor(props){
-    super(props);
-    this.state={
-      num : 10,
-    };
-  }
-  f1(){
-    console.log('f1');
-    this.state.num = 20;
-
-  }
-  f2(){
-    console.log('f2');
-    this.setState({
-      num:30,
-    })
-  }
-  f3(){
-    console.log(this.state.num);
-  }
-  render() {
-    console.log('render call');
-    return (
-      <div>
         <button onClick={()=>{this.f1()}}>버튼1</button>
-        <button onClick={()=>{this.f2()}}>버튼2</button>
-        <button onClick={()=>{this.f3()}}>버튼3</button>
-        <h3>{this.state.num}</h3>
+        {/* 약식호출, 람다를 빼고 ()를 뺌 */}
+        <button onClick={this.f2()}>버튼2</button>
       </div>
     );
   }
 }
-
 
 export default App;
 
 
 // function App() {
 //   const[state, setState] = useState('');
-//   useEffect(()=>{
+
+//   const handleClick = ()=>{
 //     setState('하하');
-//   },[]);
-  
+//   }
 //   return (
 //     <div>
 //       <h1>{state}</h1>
+//       <button onClick={()=>{handleClick()}}>버튼1</button>
 //       {/* <Bpp lion={'lion'} tiger={100}/> */}
 //     </div>
 //   );
