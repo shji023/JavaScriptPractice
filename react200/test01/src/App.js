@@ -17,15 +17,28 @@ class Bpp extends Component {
       num : 10,
     };
   }
+  f1(){
+    console.log('f1');
+    this.state.num = 20;
 
+  }
+  f2(){
+    console.log('f2');
+    this.setState({
+      num:30,
+    })
+  }
+  f3(){
+    console.log(this.state.num);
+  }
   render() {
-    let {num, tiger} = this.state;
+    console.log('render call');
     return (
       <div>
+        <button onClick={()=>{this.f1()}}>버튼1</button>
+        <button onClick={()=>{this.f2()}}>버튼2</button>
+        <button onClick={()=>{this.f3()}}>버튼3</button>
         <h3>{this.state.num}</h3>
-        <h3>{this.state.tiger}</h3>
-        <h3>{num}</h3>
-        <h3>{tiger}</h3>
       </div>
     );
   }
