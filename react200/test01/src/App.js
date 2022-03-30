@@ -1,12 +1,10 @@
 import React,{Component} from 'react';
-import PropsTypes from 'prop-types';
 class App extends Component {
   render() {
-    let a = {t:10, u:20};
     return (
       <div>
         <h1>App</h1>
-        <Bpp a = {a} b={{x:10, y:20}}/>
+        <Bpp><h6>호랑이</h6></Bpp>
       </div>
     );
   }
@@ -14,27 +12,17 @@ class App extends Component {
 
 class Bpp extends Component{
   render(){
-    let {a, b} = this.props;
+    console.log(this.props.children);
+    let {children} = this.props;
     return (
       <div>
-        <h1>{a.t} {a.u}</h1>
-        <h1>{b.x} {b.y}</h1>
+        <h1>{children}</h1>
       </div>
      
     )
   }
 }
 
-Bpp.propTypes = {
-  a:PropsTypes.shape({
-    t:PropsTypes.number,
-    u:PropsTypes.number,
-  }),
-  b:PropsTypes.shape({
-    x:PropsTypes.number,
-    y:PropsTypes.number,
-  })
-}
 export default App;
 
 
