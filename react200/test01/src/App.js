@@ -17,9 +17,18 @@ class App extends Component {
       }
     ]
     const hr = [
-      '소나무',
-      '콩나물',
-      '대나무',
+      {
+        key:'1',
+        value:'소나무'
+      },
+      {
+        key:'2',
+        value:'콩나물'
+      },
+      {
+        key:'3',
+        value:'대나무'
+      }
     ]
     return (
       <div>
@@ -27,10 +36,21 @@ class App extends Component {
         <ul>
           {ar.map((v)=><li key={v.key}>{v.value}</li>)}
         </ul>
+        <Bpp hr={hr}></Bpp>
       </div>
     );
   }
 }
 
+
+function Bpp({hr}) {
+  return (
+    <div>
+      <ul>
+          {hr.map((v)=><li key={v.key}>{v.value}</li>)}
+        </ul>
+    </div>
+  );
+}
 
 export default App;
