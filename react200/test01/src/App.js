@@ -6,23 +6,21 @@ class App extends Component {
     super(props);
     // 1.
     this.test = React.createRef();
-    this.test2 = React.createRef();
-    this.state={};
   }
   f1 = ()=>{
-    this.test2.current.textContent = 'tiger';
-    document.getElementById('btn2').textContent = 'tiger';
+    this.test.current.focus();
+    // document.getElementById('btn2').textContent = 'tiger';
   }
   f2 = ()=>{
-    this.test.current.textContent = 'apple';
-    document.getElementById('btn1').textContent = 'apple';
+    document.getElementById('inputId').focus();
   }
   
   render() {
     return (
       <div>
-        <button id='btn1' ref={this.test} onClick={this.f1}>버튼1</button>
-        <button id='btn2' ref={this.test2} onClick={this.f2}>버튼2</button>
+        <input id='inputId' type='text' ref={this.test}></input>
+        <button onClick={this.f1}>버튼1</button>
+        <button onClick={this.f2}>버튼2</button>
       </div>
     );
   }
