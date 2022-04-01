@@ -1,13 +1,29 @@
 import React, { Component } from 'react';
 
 class App extends Component {
-  // async를 붙이면 이 함수안에는 비동기 함수 호출이 있다라는것을
   f1 = async() => {
-    console.log('f1');
-    const res = await fetch('http://date.jsontest.com');
-    console.log(res);
-    const body = await res.json();
-    console.log(body.date)
+    new Promise((resolve)=>{
+      setTimeout(()=>{
+        console.log('1'); // 3초 뒤 출력
+        resolve(); // then으로 이동 시켜 then이 출력됨
+      },3000);
+    }).then(()=>{
+      new Promise((resolve)=>{
+        setTimeout(()=>{
+          console.log('2'); // 2초 뒤 출력
+          resolve(); // then으로 이동 시켜 then이 출력됨
+        },2000);
+      })
+      .then(()=>{
+        new Promise((resolve)=>{
+          setTimeout(()=>{
+            console.log('3'); // 1초 뒤 출력
+            resolve(); // then으로 이동 시켜 then이 출력됨
+          },1000);
+        })
+      })
+    })
+    console.log('test'); // test먼저 출력 >> 비동기
   }
   render() {
     return (
