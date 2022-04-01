@@ -2,34 +2,20 @@ import axios from 'axios';
 import React, { Component } from 'react';
 
 class App extends Component {
-  // get
-  f1 = async () => {
-    //fetch('http://date.jsontest.com');
-    // axios.get('http://date.jsontest.com')
-    // .then((response)=>{
-    //   console.log(response);
-    //   console.log(response.data);
-    //   console.log(response.data.date);
-    // })
-    const data = await axios.get('http://date.jsontest.com')
-    console.log(data);
-    
+  f1 = () => {
+    console.log(1);
+    this.f2(1000, ()=>{
+      console.log(3);
+    });
   }
-  // post
-  f2 = async () => {
-    const data = await axios.post('http://date.jsontest.com',{a:10, b:20})
-    // axios.post('http://date.jsontest.com',{a:10, b:20})
-    // .then((response)=>{
-    //  console.log(1, response.data.date);
-    // })
-    console.log(data);
+  f2 = (p, c) => {
+    console.log(2, p);
+    c();
   }
   render() {
     return (
       <div>
-        <h2>호랑이</h2>
         <button onClick={this.f1}>버튼1</button>
-        <button onClick={this.f2}>버튼2</button>
       </div>
     );
   }
