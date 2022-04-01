@@ -1,22 +1,13 @@
 import React, { Component } from 'react';
 
 class App extends Component {
-  f1=()=>{
+  // async를 붙이면 이 함수안에는 비동기 함수 호출이 있다라는것을
+  f1 = async() => {
     console.log('f1');
-    // response는 Promise를 얻는다.
-    // Promise.then() 함수를 사용할 수 있다. => 비동기로 작업되는것을 동기로 
-    // const response = fetch('http://date.jsontest.com');
-    // response.then();
-    fetch('http://date.jsontest.com')
-    .then((response)=>{
-      // console.log(response);
-
-      response.json()
-      .then((body)=>{
-        console.log(body.date);
-      })
-    })
-    
+    const res = await fetch('http://date.jsontest.com');
+    console.log(res);
+    const body = await res.json();
+    console.log(body.date)
   }
   render() {
     return (
