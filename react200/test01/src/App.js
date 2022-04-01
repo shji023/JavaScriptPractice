@@ -4,24 +4,25 @@ import React, { Component } from 'react';
 class App extends Component {
   constructor(props){
     super(props);
-    this.state={x:0, y:0};
+    // 1.
+    this.test = React.createRef();
+    this.test2 = React.createRef();
+    this.state={};
   }
-  f1 = (e)=>{
-    let value = document.getElementById('inputId').value;
-    console.log(value);
-    console.log(2, e.target[0].value);
-    console.log(3, e.target.input.value);
-    e.preventDefault();
+  f1 = ()=>{
+    this.test2.current.textContent = 'tiger';
+    document.getElementById('btn2').textContent = 'tiger';
+  }
+  f2 = ()=>{
+    this.test.current.textContent = 'apple';
+    document.getElementById('btn1').textContent = 'apple';
   }
   
   render() {
     return (
       <div>
-        <form onSubmit={(e)=>{this.f1(e)}}>
-          <input type='text' name='input' id='inputId' placeholder='텍스트' />
-          <br />
-          <input type='submit' value='전송'/>
-        </form>
+        <button id='btn1' ref={this.test} onClick={this.f1}>버튼1</button>
+        <button id='btn2' ref={this.test2} onClick={this.f2}>버튼2</button>
       </div>
     );
   }
