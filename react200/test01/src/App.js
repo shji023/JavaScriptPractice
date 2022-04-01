@@ -6,19 +6,22 @@ class App extends Component {
     super(props);
     this.state={x:0, y:0};
   }
-  f1 = (name, e)=>{
-    console.log(e);
-    console.log(name, e.charCode);
+  f1 = (e)=>{
+    let value = document.getElementById('inputId').value;
+    console.log(value);
+    console.log(2, e.target[0].value);
+    console.log(3, e.target.input.value);
+    e.preventDefault();
   }
   
   render() {
     return (
-      
       <div>
-        <input
-          onKeyDown={(e)=>{this.f1('onKeyDown',e)}}
-          onKeyPress={(e)=>{this.f1('onKeyPress',e)}}
-        ></input>
+        <form onSubmit={(e)=>{this.f1(e)}}>
+          <input type='text' name='input' id='inputId' placeholder='텍스트' />
+          <br />
+          <input type='submit' value='전송'/>
+        </form>
       </div>
     );
   }
