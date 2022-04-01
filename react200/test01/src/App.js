@@ -6,27 +6,19 @@ class App extends Component {
     super(props);
     this.state={x:0, y:0};
   }
-  f1 = (e)=>{
-    console.log(e.pageX, e.pageY);
-    this.setState({x:e.pageX, y:e.pageY});
+  f1 = (name, e)=>{
+    console.log(e);
+    console.log(name, e.charCode);
   }
   
   render() {
     return (
       
       <div>
-        <div 
-        style={{background:'red'}} 
-        onMouseOver={(e)=>{this.f1(e)}}
-        onMouseOut={(e)=>{this.f1(e)}}>호랑이</div>
-        <h6>{this.state.x}{this.state.y}</h6>
-        {/* <input type='text' onChange={this.f1}></input>
-        <select onChange={this.f2}>
-          <option value='호랑이1'>호랑이5</option>
-          <option value='호랑이2'>호랑이6</option>
-          <option value='호랑이3'>호랑이7</option>
-          <option value='호랑이4'>호랑이8</option>
-        </select> */}
+        <input
+          onKeyDown={(e)=>{this.f1('onKeyDown',e)}}
+          onKeyPress={(e)=>{this.f1('onKeyPress',e)}}
+        ></input>
       </div>
     );
   }
