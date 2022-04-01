@@ -2,27 +2,24 @@ import axios from 'axios';
 import React, { Component } from 'react';
 
 class App extends Component {
-  f1 = ()=>{
-    console.log(1);
+  f1 = (e)=>{
+    let inputData = e.target.value;
+    console.log(inputData);
   }
-  f2 = ()=>{
-    console.log(2);
+  f2 = (e)=>{
+    console.log(e.target.value);
   }
-  f3 = arg=>{
-    console.log(3, arg);
-  }
-  f4 = arg=>{
-    console.log(4, arg);
-  }
+  
   render() {
     return (
       <div>
-        <button onClick={()=>{this.f1()}}>버튼1</button>
-        <button onClick={this.f2}>버튼2</button>
-        <button onClick={()=>{this.f3(100)}}>버튼3</button>
-        <button onClick={(e)=>{this.f4(e)}}>버튼4</button>
-
-        <div onClick={this.f1}></div>
+        <input type='text' onChange={this.f1}></input>
+        <select onChange={this.f2}>
+          <option value='호랑이1'>호랑이5</option>
+          <option value='호랑이2'>호랑이6</option>
+          <option value='호랑이3'>호랑이7</option>
+          <option value='호랑이4'>호랑이8</option>
+        </select>
       </div>
     );
   }
