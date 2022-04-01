@@ -15,7 +15,10 @@ class App extends Component {
     return (
       
       <div>
-        <div style={{background:'red'}} onMouseMove={(e)=>{this.f1(e)}}>호랑이</div>
+        <div 
+        style={{background:'red'}} 
+        onMouseOver={(e)=>{this.f1(e)}}
+        onMouseOut={(e)=>{this.f1(e)}}>호랑이</div>
         <h6>{this.state.x}{this.state.y}</h6>
         {/* <input type='text' onChange={this.f1}></input>
         <select onChange={this.f2}>
