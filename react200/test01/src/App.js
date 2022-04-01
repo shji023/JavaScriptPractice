@@ -3,16 +3,19 @@ import React, { Component } from 'react';
 class App extends Component {
   f1=()=>{
     console.log('f1');
-    const response = fetch('http://date.jsontest.com');
-    // 결과는 pending : 보류
-    // 정상적으로 결과값을 받은 상태가 아니다
-    // fetch가 비동기 상태이기 때문에
+    // response는 Promise를 얻는다.
+    // Promise.then() 함수를 사용할 수 있다. => 비동기로 작업되는것을 동기로 
+    // const response = fetch('http://date.jsontest.com');
+    // response.then();
+    fetch('http://date.jsontest.com')
+    .then((response)=>{
+      // console.log(response);
 
-    console.log(response);
-
-    // 얻지 못한 데이터를 얻기 위한 시도
-    // exception이 터진다.
-    const body = response.json();
+      response.json()
+      .then((body)=>{
+        console.log(body.date);
+      })
+    })
     
   }
   render() {
