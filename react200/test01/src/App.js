@@ -5,12 +5,16 @@ import { handleActions } from 'redux-actions';
 
 class App extends Component {
   render() {
+    console.log(this.props.num);
+    // store를 사용하기 위해서는 index.js수정해야함.
+    console.log(this.props.store.getState().num);
     return (
       <div>
         <h3>App</h3>
         <button onClick={this.props.onInc}>버튼+</button>
         <button onClick={this.props.onDec}>버튼-</button>
         <h3>{this.props.num}</h3>
+        <h3>{this.props.store.getState().num}</h3>
       </div>
     );
   }
