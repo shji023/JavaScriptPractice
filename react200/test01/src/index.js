@@ -1,59 +1,71 @@
-import { createStore } from "redux";
-const add = document.getElementById("add");
-const minus = document.getElementById("minus");
-const number = document.querySelector("span");
+import {createStore} from 'redux';
 
-const ADD = "ADD";
-const MINUS = "MINUS"
-// function that can modify your data
-// reducer가 리턴하는 것은 무엇이든지 어플리케이션의 state가 되는것
-const countModifier = (count = 0,action)=>{
-  // //console.log(count, action);
-  // if(action.type==="ADD"){
-  //   return count +1;
-  // } else if (action.type === "MINUS"){
-  //   return count -1;
-  // } else{
-  //   return 0;
-  // }
-  switch(action.type){
-    case ADD:
-      return count + 1
-    case MINUS:
-      return count - 1
+const form = document.querySelector("form");
+const input = document.querySelector("input");
+const ul = document.querySelector("ul");
+
+const ADD_TODO = "ADD_TODO"
+const DELETE_TODO = "DELETE_TODO"
+const addToDo = (text)=>{
+  return {
+    type:ADD_TODO,
+    text
+  };
+};
+const deleteToDo = (id)=>{
+  return {
+    type:DELETE_TODO,
+    id
+  };
+};
+const reducer = (state=[],action)=>{
+  switch(action.type) {
+    case ADD_TODO:
+      // 새로운 state를 create하고 그 새로운 state를 return
+      return [...state,{text:action.text, id:Date.now()}];
+    case DELETE_TODO:
+      return state.filter(toDo=>toDo.id!==parseInt(action.id));
     default:
-      return count;
+      return state;
   }
 };
-
-const countStore = createStore(countModifier);
-
-// subscribe 는 우리에게 store안에 있는 변화들을 알 수 있게 해줌
-const onChange = ()=>{
-  number.innerText = countStore.getState();
+const store = createStore(reducer);
+const dispatchAddToDo = text=>{
+  store.dispatch(addToDo(text));
 }
-// store변화가 있을 때마다 감지해서 불려질 것
-countStore.subscribe(onChange);
-
-// 어떻게 countModifier에게 action을 보낼 수 있지?
-// dispatch를 활용
-// countStore.dispatch({type:"ADD"});
-// countStore.dispatch({type:"ADD"});
-// countStore.dispatch({type:"ADD"});
-// countStore.dispatch({type:"ADD"});
-// countStore.dispatch({type:"ADD"});
-// countStore.dispatch({type:"MINUS"});
-// console.log(countStore.getState()); // 4
-
-// action은 object이어야함
-// 액션은 정의되지 않은 type property가 있으면 안된다.
-const handleAdd = ()=> {
-  countStore.dispatch({type:ADD});
+const dispatchDeleteToDo = (e)=>{
+  const id = parseInt(e.target.parentNode.id);
+  store.dispatch(deleteToDo(id));
 }
-const handleMinus = () => {
-  countStore.dispatch({type:MINUS});
+store.subscribe(()=>console.log(store.getState()));
+const paintToDos = ()=>{
+  const toDos = store.getState();
+  ul.innerHTML=""
+  toDos.forEach(toDo =>{
+    const li = document.createElement("li");
+    const btn = document.createElement("button");
+    btn.innerText = "DEL";
+    btn.addEventListener("click",dispatchDeleteToDo);
+    li.id = toDo.id;
+    li.innerText = toDo.text;
+    li.appendChild(btn);
+    ul.appendChild(li);
+  })
 }
-// anonymous function
-add.addEventListener("click",handleAdd)
-minus.addEventListener("click",handleMinus)
+store.subscribe(paintToDos);
 
+// dateless
+// const createTodo = toDo => {
+//   const li = document.createElement("li");
+//   li.innerText = toDo;
+//   ul.appendChild(li);
+// }
+
+const onSubmit = e =>{
+  e.preventDefault();
+  const toDo = input.value;
+  input.value = "";
+  dispatchAddToDo(toDo);
+}
+
+form.addEventListener("submit",onSubmit);
