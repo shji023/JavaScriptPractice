@@ -1,17 +1,11 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App, { reducers } from './App';
-import { createStore } from 'redux';
-import { Provider } from 'react-redux';
-import reportWebVitals from './reportWebVitals';
+import { createStore } from "redux";
+const add = document.getElementById("add");
+const minus = document.getElementById("minus");
+const number = document.querySelector("span");
 
-const store = createStore(reducers);
+const countModifier = (count = 0)=>{
+    return count;
+};
 
-ReactDOM.render(
-  <Provider>
-    <App />
-    document.getElementByID('root');
-  </Provider>
-)
-reportWebVitals();
+const countStore = createStore(countModifier);
+console.log(countStore.getState());
