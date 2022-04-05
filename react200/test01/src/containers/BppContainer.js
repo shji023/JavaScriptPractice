@@ -4,7 +4,7 @@ import Bpp from "../components/Bpp";
 import { dec, inc } from "../modules/bpp";
 
 const BppContainer = ()=>{
-  const num = useSelector(state=>state.num);
+  const num = useSelector(state=>state.bppReducer.num);
   const dispatch = useDispatch();
   return(
     <Bpp num={num}

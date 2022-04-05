@@ -1,12 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import { createStore } from 'redux';
+import { combineReducers, createStore } from 'redux';
 import { Provider } from 'react-redux';
-import reducers from './modules/bpp';
+import bppReducer from './modules/bpp';
+import cppReducer from './modules/cpp';
 //const store = createStore(리듀서);
-const store = createStore(reducers);
-
+const rootReducer = combineReducers({
+  bppReducer,
+  cppReducer,
+})
+const store = createStore(rootReducer);
 ReactDOM.render(
   <Provider store = {store}> 
     <App />

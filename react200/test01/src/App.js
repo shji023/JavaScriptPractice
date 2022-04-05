@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import BppContainer from './containers/BppContainer';
+import CppContainer from './containers/CppContainer';
 
 class App extends Component {
   render() {
     return (
       <div>
         <BppContainer/>
+        <CppContainer/>
       </div>
     );
   }
