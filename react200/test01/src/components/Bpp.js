@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import EppContainer from '../containers/EppContainer';
 class Bpp extends Component {
     render() {
       return (
@@ -7,6 +8,7 @@ class Bpp extends Component {
           <h1>{this.props.num}</h1>
           <button onClick={this.props.onInc}>증가</button>
           <button onClick={this.props.onDec}>감소</button>
+          <EppContainer />
         </div>
       );
     }
