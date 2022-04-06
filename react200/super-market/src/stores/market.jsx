@@ -1,4 +1,5 @@
 import { observable } from 'mobx';
+import { counter } from './counter';
 
 const market = observable({
   selectedItems: [],
@@ -8,11 +9,11 @@ const market = observable({
       this.selectedItems.push({
         name,
         price,
-        count: 1,
+        count: counter.number,
       });
       return;
     }
-    exists.count++;
+    exists.count += counter.number;
   },
   take(name) {
     const itemToTake = this.selectedItems.find((item) => item.name === name);
