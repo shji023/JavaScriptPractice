@@ -1,33 +1,28 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './Main';
-import {Provider} from 'react-redux';
-import store from './store';
-ReactDOM.render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
-  document.getElementById("root")
-);
 // import React from 'react';
 // import ReactDOM from 'react-dom';
-// import App from './App';
-// import { combineReducers, createStore } from 'redux';
-// import { Provider } from 'react-redux';
-// import bppReducer from './modules/bpp';
-// import cppReducer from './modules/cpp';
-// //const store = createStore(리듀서);
-// const rootReducer = combineReducers({
-//   bppReducer,
-//   cppReducer,
-// })
-// const store = createStore(rootReducer);
+// import App from './Main';
+// import {Provider} from 'react-redux';
+// import store from './store';
 // ReactDOM.render(
-//   <Provider store = {store}> 
+//   <Provider store={store}>
 //     <App />
 //   </Provider>,
-//   document.getElementById('root')
+//   document.getElementById("root")
 // );
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './App';
+import {createStore } from 'redux';
+import { Provider } from 'react-redux';
+import rootReducer from './modules';
+
+const store = createStore(rootReducer);
+ReactDOM.render(
+  <Provider store = {store}> 
+    <App />
+  </Provider>,
+  document.getElementById('root')
+);
 
 /*
 import React from 'react';
