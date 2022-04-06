@@ -1,15 +1,11 @@
-import { action, makeObservable, observable } from 'mobx';
+import { action, makeAutoObservable, makeObservable, observable } from 'mobx';
 import { observer } from 'mobx-react';
 import React, { Component } from 'react';
 
 class TigerStore {
   count = 0;
   constructor(){
-    makeObservable(this,{
-      count: observable,
-      increase: action,
-      decrease: action
-    });
+    makeAutoObservable(this);
   }
   increase(){this.count+=1;}
   decrease(){this.count-=1;}
