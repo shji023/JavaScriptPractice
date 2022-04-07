@@ -1,7 +1,199 @@
 import { action, autorun, computed, makeAutoObservable, makeObservable, observable } from 'mobx';
 import { observer } from 'mobx-react';
-import React from 'react';
+import React,{Component} from 'react';
 
+// ex1)
+class Animal {
+  energyLevel
+
+  constructor(name) {
+    this.name = name
+    this.energyLevel = 100
+    makeAutoObservable(this)
+  }
+
+  reduceEnergy() {
+    this.energyLevel -= 10
+  }
+
+  get isHungry() {
+    return this.energyLevel < 50
+  }
+}
+
+const giraffe = new Animal("Gary")
+
+autorun(() => {
+  console.log("Energy level:", giraffe.energyLevel)
+})
+
+autorun(() => {
+  if (giraffe.isHungry) {
+    console.log("Now I'm hungry!")
+  } else {
+    console.log("I'm not hungry!")
+  }
+})
+
+console.log("Now let's change state!")
+for (let i = 0; i < 10; i++) {
+  giraffe.reduceEnergy()
+}
+
+// ex2)
+class Animal {
+  energyLevel
+
+  constructor(name) {
+    this.name = name
+    this.energyLevel = 100
+    makeObservable(this, {
+        energyLevel:observable,
+        isHungry:computed,
+        reduceEnergy:action,
+      });
+  }
+
+  reduceEnergy() {
+    this.energyLevel -= 10
+  }
+
+  get isHungry() {
+    return this.energyLevel < 50
+  }
+}
+
+const giraffe = new Animal("Gary")
+
+autorun(() => {
+  console.log("Energy level:", giraffe.energyLevel)
+})
+
+autorun(() => {
+  if (giraffe.isHungry) {
+    console.log("Now I'm hungry!")
+  } else {
+    console.log("I'm not hungry!")
+  }
+})
+
+console.log("Now let's change state!")
+for (let i = 0; i < 10; i++) {
+  giraffe.reduceEnergy()
+}
+// ex3)
+class Animal {
+  energyLevel
+
+  constructor(name) {
+    this.name = name
+    this.energyLevel = 100
+    makeObservable(this, {
+        energyLevel:observable,
+        isHungry:computed,
+        reduceEnergy:action,
+      });
+    autorun(() => {
+      console.log("Energy level:", this.energyLevel)
+    })
+    
+    autorun(() => {
+      if (this.isHungry) {
+        console.log("Now I'm hungry!")
+      } else {
+        console.log("I'm not hungry!")
+      }
+    })
+  }
+
+  reduceEnergy() {
+    this.energyLevel -= 10
+  }
+
+  get isHungry() {
+    return this.energyLevel < 50
+  }
+}
+
+const giraffe = new Animal("Gary")
+
+
+
+console.log("Now let's change state!")
+for (let i = 0; i < 10; i++) {
+  giraffe.reduceEnergy()
+}
+
+// ex4)
+// 1. autorun은 객체가 생성될 때 자동으로 한번 호출된다.
+class Animal {
+  energyLevel
+
+  constructor(name) {
+    this.name = name
+    this.energyLevel = 100
+    makeObservable(this, {
+      // mobx가 energyLevel을 항상 주시하세요
+      energyLevel:observable,
+      // computed 함수이냐, 변수이냐 ? 변수이다.
+      // boolean타입의 변수로 사용되고 있다.
+      isHungry:computed,
+      // energyLevel 값의 변화를 주는 함수
+      reduceEnergy:action,
+    });
+    // energyLevel의 변화가 있으면 호출된다.
+    autorun(() => {
+      console.log("Energy level:1", this.energyLevel)
+    })
+    autorun(() => {
+      console.log("Energy level:2", this.energyLevel)
+    })
+    // isHungry에 변화가 있으면 호출된다.
+    autorun(() => {
+      if (this.isHungry) {
+        console.log("Now I'm hungry!")
+      } else {
+        console.log("I'm not hungry!")
+      }
+    })
+  }
+  // 1. 옵저버 변수가 값이 갱신이 일어나면 autorun이 호출된다.
+  // 2. 옵저버 변수를 사용하는 autorun이 호출된다.
+  reduceEnergy() {
+    console.log('에너지 줄임');
+    //this.energyLevel -= 10
+  }
+  // isHungry = return 결과;
+  // 이 함수가 옵저버 변수를 사용하고 있음
+  // 옵저버 값이 변경 되었을 때 이 함수는 자동 호출됨
+
+  get isHungry() {
+    console.log('isHungry');
+    // return 100; >> this.energy변수를 안써서 이 함수로 안들어옴
+    return this.energyLevel < 50;
+  }
+}
+
+const giraffe = new Animal()
+
+console.log("--------------------------")
+for (let i = 0; i < 1; i++) {
+  giraffe.reduceEnergy()
+}
+
+class App extends Component {
+  render() {
+    return (
+      <div>
+        
+      </div>
+    );
+  }
+}
+
+export default App;
+
+/*
 class ObservableTodoStore {
   todos = [];
   pendingRequests = 0;
@@ -86,6 +278,7 @@ const TodoView = observer(({todo}) => {
     </li>
   );
 })
+
 function App() {
   return (
     <div>
@@ -95,6 +288,7 @@ function App() {
 }
 
 export default App;
+*/
 
 // import { action, makeAutoObservable, makeObservable, observable } from 'mobx';
 // import { observer } from 'mobx-react';
