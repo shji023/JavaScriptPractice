@@ -6,11 +6,10 @@ const add = ()=>{
 }
 class App extends Component {
   increase = ()=>{
-    this.props.store.dispatch(add());
+    this.props.dispatch(add());
   }
   render() {
-    console.log(this.props.indexProp);
-    console.log(this.props.store);
+    // console.log(this.props.indexProp);
     //console.log(this.props.store.getState().num);
     return (
       <div>
@@ -37,7 +36,6 @@ export const reducers = (state = initState, action) => {
 }
 
 let mapStateToProps = (state,props) =>{
-  console.log('mapStateToProps');
   return {
     num:state.num,
   }
