@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 const ADD = 'ADD';
 const add = ()=>{
   return {type:'ADD'};
@@ -8,7 +9,9 @@ class App extends Component {
     this.props.store.dispatch(add());
   }
   render() {
-    console.log(this.props.store.getState().num);
+    console.log(this.props.indexProp);
+    console.log(this.props.store);
+    //console.log(this.props.store.getState().num);
     return (
       <div>
         <h1>App</h1>
@@ -32,4 +35,14 @@ export const reducers = (state = initState, action) => {
       return state;
   }
 }
-export default App;
+
+let mapStateToProps = (state,props) =>{
+  console.log('mapStateToProps');
+  return {
+    num:state.num,
+  }
+}
+export default App = connect(
+  mapStateToProps, 
+  null
+)(App);
