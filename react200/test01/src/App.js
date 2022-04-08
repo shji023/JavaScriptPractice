@@ -10,15 +10,20 @@ class Tiger {
     makeObservable(this,{
       count: observable,
       comA:computed,
+      comB:computed,
       increase:action,
     });
     // 2. autorun에서 사용
-    autorun(()=>{console.log('Auto Run: ', this.comA);});
+    autorun(()=>{console.log('Auto Run1: ', this.comA);});
+    autorun(()=>{console.log('Auto Run2: ', this.comB);});
   }
   get comA(){
     console.log('comA:', this.count);
-    return 100;
-    // return this.count
+    return this.count-1;
+  }
+  get comB(){
+    console.log('comB:', this.count);
+    return this.count+1;
   }
   // 정의1: 옵저버 변수가 갱신이 되면, 옵저버 변수를 사용하는 컴퓨트가 호출이됨
   // 단, computed가 어디선가 사용되고 있을 때 호출된다. >> 예외사항이 아니고 당연한 사항
@@ -45,6 +50,8 @@ class App extends Component {
         <h1>{t.count}</h1>
         {/* 1. 렌더에서 사용 */}
         {/* <h1>{t.comA}</h1> */}
+        <h1>{t.comA}</h1>
+        <h1>{t.comB}</h1>
       </div>
     );
   }
