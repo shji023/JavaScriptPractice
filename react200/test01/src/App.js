@@ -1,46 +1,34 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-const ADD = 'ADD';
-const add = ()=>{
-  return {type:'ADD'};
-}
+import cookie from 'react-cookies';
+
 class App extends Component {
-  increase = ()=>{
-    this.props.dispatch(add());
+  f1 = () =>{
+    cookie.save('tiger',1000);
+    cookie.save('lion',2000);
+    cookie.save('dog',3000);
+  }
+  f2 = () =>{
+    const value = cookie.load('lion');
+    alert(value);
+  }
+  f3 = () =>{
+    cookie.remove('tiger');
+  }
+  f4 = () =>{
+    cookie.save('tiger',4000);
+    cookie.save('lion',5000);
+    cookie.save('dog',6000);
   }
   render() {
-    // console.log(this.props.indexProp);
-    //console.log(this.props.store.getState().num);
     return (
       <div>
-        <h1>App</h1>
-        <button onClick={this.increase}>버튼</button>
+        <button onClick={this.f1}>쿠키 추가</button>
+        <button onClick={this.f2}>쿠키 검색</button>
+        <button onClick={this.f3}>쿠키 제거</button>
+        <button onClick={this.f4}>쿠키 수정</button>
       </div>
     );
   }
 }
 
-const initState = {
-  num:100,
-}
-
-export const reducers = (state = initState, action) => {
-  switch(action.type){
-    case ADD:
-      return {
-        num: state.num + 1,
-      };
-    default:
-      return state;
-  }
-}
-
-let mapStateToProps = (state,props) =>{
-  return {
-    num:state.num,
-  }
-}
-export default App = connect(
-  mapStateToProps, 
-  null
-)(App);
+export default App;
