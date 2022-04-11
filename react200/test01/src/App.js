@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { Component } from 'react';
 import { CartesianGrid, Legend, Line, LineChart,Tooltip, XAxis, YAxis } from 'recharts';
 
@@ -10,14 +11,29 @@ const data = [
 ];
 
 class App extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      append_FPList:undefined
+    }
+  }
+  f1 = ()=>{
+    axios.get( 'http://3.35.120.155:5000/users', {} )
+    .then((res)=>{
+      this.setState({
+        append_FPList:res.data.entry
+      });
+    })
+  }
   render() {
     return (
       <div>
         <h1>ㅎㅇ</h1>
+        <button onClick={this.f1}>버튼</button>
         <LineChart
           width={1000}
           height={300}
-          data={data}
+          data={this.state.append_FPList}
           margin={{
             top: 5,
             right: 30,
