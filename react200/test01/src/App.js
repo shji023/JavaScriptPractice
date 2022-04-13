@@ -2,38 +2,40 @@ import axios from 'axios';
 import React, { Component } from 'react';
 
 class App extends Component {
-  f1 = async()=>{
-    const res = await fetch('/users');
-    const body = await res.text();
-    console.log(typeof body,body);
+  constructor(props){
+    super(props);
+    this.state = {
+      userName:'홍길동',
+      age:3000,
+    }
   }
-  f2 = ()=>{
-    axios.get('/users',{})
-    .then((res)=>{
-      console.log(res.data);
+  f1 = (e) => {
+    axios.post('/users/2',{
+      name:this.state.userName,
+      age:this.state.age
     })
-  }
-  f3 = ()=>{
-    axios.get('/users/2',{})
-    .then((res)=>{
-      console.log(res.data);
-      console.log(res.data.message);
-    })
-  }
-  f4 = ()=>{
-    axios.post('/users/2',{name:'앵무새'})
     .then((res)=>{
       console.log(res.data.name);
+      console.log(res.data.age);
     })
+    e.preventDefault();
+  }
+  f2 = (e)=>{
+    console.log(e.target.value);
+    this.setState({userName:e.target.value});
   }
   render() {
     return (
       <div>
         <h1>App</h1>
-        <button onClick={this.f1}>버튼1</button>
-        <button onClick={this.f2}>버튼2</button>
-        <button onClick={this.f3}>버튼3</button>
-        <button onClick={this.f4}>버튼4</button>
+        <form onSubmit={this.f1}>
+          <input 
+            type="text" 
+            value={this.state.userName} 
+            onChange={this.f2}>        
+          </input>
+          <button type='submit'>로그인</button>
+        </form>
       </div>
     );
   }

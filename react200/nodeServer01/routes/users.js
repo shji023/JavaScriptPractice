@@ -16,6 +16,7 @@ router.post('/2', function(req, res) {
   console.log(req.body);
   console.log(req.body.name);
   req.body.name += 100;
+  req.body.age += 2;
   res.send(req.body);
 });
 
