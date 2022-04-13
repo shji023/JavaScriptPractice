@@ -2,15 +2,11 @@ var express = require('express');
 var router = express.Router();
 
 router.get('/', function(req, res, next) {
-  res.send('호랑이 보낸다~~');
-});
-
-router.get('/red', function(req, res, next) {
-  res.send('red');
-});
-
-router.get('/blue', function(req, res, next) {
-  res.send('blue');
+  console.log(req.body);
+  // 빈 객체 에다가 속성 정의해서 client에 돌려줄 수 있다.
+  req.body.name='홍길동';
+  req.body.salary = 3000;
+  res.send(req.body);
 });
 
 

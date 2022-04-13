@@ -4,22 +4,10 @@ import React, { Component } from 'react';
 class App extends Component {
   f1 = ()=> {
     axios.get('/tiger')
-    .then(res=>{
-      console.log(res.data);
-    })
-  }
-  f2 = ()=> {
-    axios.get('/tiger/red')
-    .then(res=>{
-      console.log(res.data);
-    })
-  }
-  f3 = ()=> {
-    axios.get('/tiger/blue')
-    .then(res=>{
-      console.log(res.data);
-    })
-  }
+    .then(
+      res=>{console.log(res.data);}
+    )
+  };
 
   render() {
     return (
