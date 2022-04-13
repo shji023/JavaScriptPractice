@@ -2,14 +2,14 @@ import axios from 'axios';
 import React, { Component } from 'react';
 
 class App extends Component {
-  f1 = ()=>{
-    axios.get('/api/Swtool')
+  f1 = ()=> {
+    axios.post('/')
     .then(res=>{
       console.log(res.data);
     })
   }
-  f2 = ()=>{
-    axios.get('/api/Swtool/tiger?age=2000')
+  f2 = ()=> {
+    axios.post('/')
     .then(res=>{
       console.log(res.data);
     })

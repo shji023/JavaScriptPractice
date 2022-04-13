@@ -6,10 +6,17 @@ var app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.use('/users',require('./routes/users'));
+// 중복 시 먼저 설정된 함수 실행 >> 1 출력
+app.use('/', function(req, res, next) {
+  console.log(1);
+  res.send('호랑이');
+});
+app.use('/', function(req, res, next) {
+  console.log(2);
+  res.send('호랑이');
+});
 
-let swtoolRouter = require('./routes/SwtoolRout');
-app.use('/api/Swtool',swtoolRouter);
+
 
 var port = process.env.PORT || '5000';
 app.listen(port, ()=>{console.log('listen');});
