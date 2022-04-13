@@ -3,8 +3,7 @@ import React, { Component } from 'react';
 
 class App extends Component {
   f1 = ()=> {
-    axios.post('/tiger?command=select',
-    {userName:'홍홍홍'})
+    axios.get('/tiger')
     .then(
       res=>{console.log(res.data);}
     )
@@ -14,6 +13,7 @@ class App extends Component {
     return (
       <div>
         <button onClick={this.f1}>버튼1</button>
+        <input type="text" value></input>
       </div>
     );
   }

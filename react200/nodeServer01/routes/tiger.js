@@ -3,19 +3,17 @@ var router = express.Router();
 
 const mysql = require('mysql');
 const con = mysql.createConnection({
-  host : "localhost",
+  host : "database-1.cziyl6rwn9rl.ap-northeast-2.rds.amazonaws.com",
   port:"3306",
-  database:"db01",
-  user:'root',
-  password:'1234'
+  database:"jiyoung",
+  user:'admin',
+  password:'12345678'
 });
 
-router.post('/', function(req, res, next) {
-  console.log(req.query.command);
-  console.log(req.body);
+router.get('/', function(req, res, next) {
   try{
     con.query(
-      'select * from table01',
+      'select * from table05',
       (error,rows,fields)=>{
         if(error) throw error;
         //console.log(rows);
