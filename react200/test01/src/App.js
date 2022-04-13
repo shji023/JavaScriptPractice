@@ -3,13 +3,13 @@ import React, { Component } from 'react';
 
 class App extends Component {
   f1 = ()=> {
-    axios.get('/tiger?value=1')
+    axios.get('/tiger')
     .then(res=>{
       console.log(res.data);
     })
   }
   f2 = ()=> {
-    axios.get('/tiger?value=2')
+    axios.get('/tiger/lion')
     .then(res=>{
       console.log(res.data);
     })
