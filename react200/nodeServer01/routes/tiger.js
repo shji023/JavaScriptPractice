@@ -1,18 +1,31 @@
 var express = require('express');
 var router = express.Router();
 
-// client send >> middle >> server recv
-// /?변수=값 app.use() req.query변수
-router.get('/', function(req, res, next) {
-  console.log(req.query.command);
-  res.send(req.body);
-});
-// parameter 전송
-// : 이 핵심
-router.post('/:command', function(req, res, next) {
-  console.log(req.params.command);
-  res.send(req.body);
+const mysql = require('mysql');
+const con = mysql.createConnection({
+  host : "localhost",
+  port:"3306",
+  database:"db01",
+  user:'root',
+  password:'1234'
 });
 
+router.post('/', function(req, res, next) {
+  console.log(req.query.command);
+  console.log(req.body);
+  try{
+    con.query(
+      'select * from table01',
+      (error,rows,fields)=>{
+        if(error) throw error;
+        //console.log(rows);
+        res.send(rows);
+      }
+    );
+  }catch(error){
+    console.log('error:',error);
+  }
+  // res.send('test');
+});
 
 module.exports = router;

@@ -3,17 +3,8 @@ import React, { Component } from 'react';
 
 class App extends Component {
   f1 = ()=> {
-    // query전송
-    axios.get('/tiger?command=monkey')
-    .then(
-      res=>{console.log(res.data);}
-    )
-  };
-  f2 = ()=> {
-    // 파라미터 전송
-    // 하위주소가 아니고 데이터
-    // 받는 놈이 해석을 잘해야됨
-    axios.post('/tiger/monkey2')
+    axios.post('/tiger?command=select',
+    {userName:'홍홍홍'})
     .then(
       res=>{console.log(res.data);}
     )
@@ -23,8 +14,6 @@ class App extends Component {
     return (
       <div>
         <button onClick={this.f1}>버튼1</button>
-        <button onClick={this.f2}>버튼2</button>
-        <button onClick={this.f3}>버튼3</button>
       </div>
     );
   }
