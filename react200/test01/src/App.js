@@ -2,43 +2,71 @@ import axios from 'axios';
 import React, { Component } from 'react';
 
 class App extends Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      userName:'홍길동',
-      age:3000,
-    }
-  }
-  f1 = (e) => {
-    axios.post('/users/2',{
-      name:this.state.userName,
-      age:this.state.age
+  f1 = ()=>{
+    axios.get('./api/Swtool')
+    .then(res=>{
+      console.log(res.data);
     })
-    .then((res)=>{
-      console.log(res.data.name);
-      console.log(res.data.age);
+  }
+  f2 = ()=>{
+    axios.get('./api/Swtool/tiger?age=2000')
+    .then(res=>{
+      console.log(res.data);
     })
-    e.preventDefault();
   }
-  f2 = (e)=>{
-    console.log(e.target.value);
-    this.setState({userName:e.target.value});
-  }
+
   render() {
     return (
       <div>
-        <h1>App</h1>
-        <form onSubmit={this.f1}>
-          <input 
-            type="text" 
-            value={this.state.userName} 
-            onChange={this.f2}>        
-          </input>
-          <button type='submit'>로그인</button>
-        </form>
+        <button onClick={this.f1}>버튼</button>
+        <button onClick={this.f2}>버튼</button>
       </div>
     );
   }
 }
 
 export default App;
+
+
+/*
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+
+function App() {
+  const [userName, setUserName] = useState('홍길동');
+  const [age, setAge] = useState(3000);
+
+  const f1 = async(e)=>{
+    e.preventDefault();
+    const postData = await axios.post('/users/2',{
+      name:userName, 
+      age:age
+    });
+    console.log(postData.data.name);
+    console.log(postData.data.age);
+  }
+  
+  const f2 = (e)=>{
+    setUserName(e.target.value);
+  }
+
+  return (
+    <div>
+        <h1>App</h1>
+        <form onSubmit={f1}>
+          <input 
+            type="text" 
+            value={userName} 
+            onChange={f2}>        
+          </input>
+          <button type='submit'>로그인</button>
+        </form>
+      </div>
+  );
+}
+
+export default App;
+*/
+
+
+

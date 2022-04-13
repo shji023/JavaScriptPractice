@@ -8,6 +8,9 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use('/users',require('./routes/users'));
 
+let swtoolRouter = require('./routes/SwtoolRout');
+app.use('/api/Swtool',swtoolRouter);
+
 var port = process.env.PORT || '5000';
 app.listen(port, ()=>{console.log('listen');});
 
