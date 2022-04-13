@@ -1,54 +1,39 @@
 import axios from 'axios';
 import React, { Component } from 'react';
-import { Area, AreaChart, Bar, CartesianGrid, ComposedChart, Legend, Line, LineChart,Tooltip, XAxis, YAxis } from 'recharts';
-
-const data = [
-  { 군구: '광진구', 유동인구수: 32760, 비유동인구수: 34000 },
-  { 군구: '동대문구', 유동인구수: 30480, 비유동인구수: 56000 },
-  { 군구: '마포구', 유동인구수: 27250, 비유동인구수: 23000 },
-  { 군구: '구로구', 유동인구수: 49870, 비유동인구수: 67000 },
-  { 군구: '강남구', 유동인구수: 51420, 비유동인구수: 55000 },
-];
 
 class App extends Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      append_FPList:undefined
-    }
+  f1 = async()=>{
+    const res = await fetch('/users');
+    const body = await res.text();
+    console.log(typeof body,body);
   }
-  f1 = ()=>{
-    axios.get( 'http://3.35.120.155:5000/users', {} )
+  f2 = ()=>{
+    axios.get('/users',{})
     .then((res)=>{
-      this.setState({
-        append_FPList:res.data.entry
-      });
+      console.log(res.data);
+    })
+  }
+  f3 = ()=>{
+    axios.get('/users/2',{})
+    .then((res)=>{
+      console.log(res.data);
+      console.log(res.data.message);
+    })
+  }
+  f4 = ()=>{
+    axios.post('/users/2',{name:'앵무새'})
+    .then((res)=>{
+      console.log(res.data.name);
     })
   }
   render() {
     return (
       <div>
-        <h1>ㅎㅇ</h1>
-        <button onClick={this.f1}>버튼</button>
-        <ComposedChart
-          width={1000}
-          height={300}
-          data={this.state.append_FPList}
-          margin={{
-            top: 5,
-            right: 30,
-            left: 20,
-            bottom: 5,
-          }}
-        >
-          <CartesianGrid strokeDasharray="4 3" />
-          <XAxis dataKey="군구" />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          <Bar dataKey="유동인구수" fill="#8884d8"  />
-          <Line type="monotone" dataKey="유동인구수" stroke="#ff7300" />
-        </ComposedChart>
+        <h1>App</h1>
+        <button onClick={this.f1}>버튼1</button>
+        <button onClick={this.f2}>버튼2</button>
+        <button onClick={this.f3}>버튼3</button>
+        <button onClick={this.f4}>버튼4</button>
       </div>
     );
   }
