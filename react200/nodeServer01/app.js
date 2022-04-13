@@ -7,18 +7,23 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 // 중복 시 먼저 설정된 함수 실행 >> 1 출력
-app.get('/tiger', function(req, res, next) {
-  console.log('get');
-  res.send('호랑이');
-});
-app.post('/tiger', function(req, res, next) {
-  console.log('post');
-  res.send('호랑이');
-});
-app.use('/lion', function(req, res, next) {
-  console.log('use');
-  res.send('호랑이');
-});
+app.use('/tiger', 
+  function(req, res, next) {
+    // send를 만나면 EndPoint로 본다. return이라고 생각하면됨
+    // res.send('호랑이1');
+    console.log(1);
+    next(); // 다음함수 실행
+  },
+  function(req, res, next) {
+    console.log(2);
+    // res.send('호랑이2');
+    next();
+  },
+  function(req, res, next) {
+    console.log(3);
+    res.send('호랑이3');
+  }
+  );
 
 var port = process.env.PORT || '5000';
 app.listen(port, ()=>{console.log('listen');});
