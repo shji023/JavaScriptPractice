@@ -3,7 +3,17 @@ import React, { Component } from 'react';
 
 class App extends Component {
   f1 = ()=> {
-    axios.get('/tiger')
+    // query전송
+    axios.get('/tiger?command=monkey')
+    .then(
+      res=>{console.log(res.data);}
+    )
+  };
+  f2 = ()=> {
+    // 파라미터 전송
+    // 하위주소가 아니고 데이터
+    // 받는 놈이 해석을 잘해야됨
+    axios.post('/tiger/monkey2')
     .then(
       res=>{console.log(res.data);}
     )

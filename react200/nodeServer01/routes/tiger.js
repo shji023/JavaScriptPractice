@@ -1,11 +1,16 @@
 var express = require('express');
 var router = express.Router();
 
+// client send >> middle >> server recv
+// /?변수=값 app.use() req.query변수
 router.get('/', function(req, res, next) {
-  console.log(req.body);
-  // 빈 객체 에다가 속성 정의해서 client에 돌려줄 수 있다.
-  req.body.name='홍길동';
-  req.body.salary = 3000;
+  console.log(req.query.command);
+  res.send(req.body);
+});
+// parameter 전송
+// : 이 핵심
+router.post('/:command', function(req, res, next) {
+  console.log(req.params.command);
   res.send(req.body);
 });
 
