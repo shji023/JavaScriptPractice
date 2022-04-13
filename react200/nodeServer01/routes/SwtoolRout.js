@@ -8,6 +8,7 @@ router.get('/', function(req, res, next) {
 
 router.get('/tiger', function(req, res, next) {
   let age = req.query.age;
+  console.log(age);
   //res.send('호랑이');
   if(age==2000){
     console.log(true);
