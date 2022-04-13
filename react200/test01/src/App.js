@@ -3,13 +3,19 @@ import React, { Component } from 'react';
 
 class App extends Component {
   f1 = ()=> {
-    axios.get('/tiger?value=1')
+    axios.get('/tiger')
     .then(res=>{
       console.log(res.data);
     })
   }
   f2 = ()=> {
-    axios.get('/tiger?value=2')
+    axios.get('/tiger/red')
+    .then(res=>{
+      console.log(res.data);
+    })
+  }
+  f3 = ()=> {
+    axios.get('/tiger/blue')
     .then(res=>{
       console.log(res.data);
     })
@@ -18,8 +24,9 @@ class App extends Component {
   render() {
     return (
       <div>
-        <button onClick={this.f1}>버튼</button>
-        <button onClick={this.f2}>버튼</button>
+        <button onClick={this.f1}>버튼1</button>
+        <button onClick={this.f2}>버튼2</button>
+        <button onClick={this.f3}>버튼3</button>
       </div>
     );
   }
