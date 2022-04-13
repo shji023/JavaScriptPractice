@@ -7,17 +7,26 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 var router = express.Router();
-
-// 중복 시 먼저 설정된 함수 실행 >> 1 출력
+ 
 app.use('/tiger', 
-  router.get('/',(req, res, next)=>{
-    console.log(1);
-    res.send('앵두1');
-  }),
-  router.get('/lion',(req, res, next)=>{
-    console.log(2);
-    res.send('앵두2');
-  })
+  router.get('/',
+    function(req, res, next){
+      if(req.query.value == 1){
+        console.log(1111);
+        next('route'); // 지금 현재 라우터의 다음 라우터로 점프
+      }else {
+        console.log(2222);
+        next();
+      }
+    },
+    function(req, res, next){
+      console.log(3333);
+      res.send('앵두1');
+    }),
+    router.get('/',function(req,res,next){
+      console.log(4444);
+      res.send('앵두2');
+    })
 );
 
 var port = process.env.PORT || '5000';
