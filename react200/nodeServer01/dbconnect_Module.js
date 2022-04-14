@@ -1,51 +1,63 @@
-var express = require('express');
+var express = require( 'express' );
 var router = express.Router();
+
 const mysql = require('mysql');
-const { route } = require('./routes/tiger');
-const con = mysql.createConnection({
-  host : "database-1.cziyl6rwn9rl.ap-northeast-2.rds.amazonaws.com",
-  port:"3306",
-  database:"jiyoung",
-  user:'admin',
-  password:'12345678'
-});
-router.post('/',function(req, res, next){
-  let param = req.body;
-  console.log(param);
-  // p.363 22라인 해석
-  console.log(param.mapper+'.xml');
+// const con = mysql.createConnection( {
+//     host: "database-1.cziyl6rwn9rl.ap-northeast-2.rds.amazonaws.com",
+//     port: 3306,
+//     database: 'ahhyun',
+//     user: 'admin',
+//     password: '12345678',
+    
+// } );
 
-  // p.363 18라인 해석
-  const myBatisMapper = require('mybatis-mapper');
-  console.log(typeof myBatisMapper); // object
+// 풀 만듬
+const pool = mysql.createPool({
+    // 풀 환경설정
+    connectionLimit: 66, // 커넥션 풀에 저장할 수 있는 최대 커넥션 개수 (최대 연결 수)
+    waitForConnections: true, // 풀이 꽉 찼다면, 여유가 생길 때까지 새 연결 대기 여부
 
-  // 외부에서 작성한 파일 로딩하는 역할 (여러개 로딩 가능)
-  myBatisMapper.createMapper(['SwToolsMapper.xml']);
-
-  // 동일 코드
-  // myBatisMapper.createMapper([param.mapper+'.xml']);
-
-  // query문장을 작성
-  let query = myBatisMapper.getStatement(
-    'SwToolsMapper', // namespace설정
-    'selectOne', // 실행할 쿼리문 id 설정
-    {id:3},
-    {language:'sql',indent:'  '}
-  );
-  console.log(query);
-  console.log(2);
-
-  try{
-    con.query(
-      query,
-      (error,rows,fields)=>{
-        console.log(rows);
-        res.send(rows);
-      }
-    );
-  }catch(error){
-    console.log('error: ',error);
-  }
+    // 연결할 디비 설정
+    host: "database-1.cziyl6rwn9rl.ap-northeast-2.rds.amazonaws.com",
+    port: 3306,
+    database: 'ahhyun',
+    user: 'admin',
+    password: '12345678',
 })
+
+router.post( '/', function(req, res, next){
+    let param = req.body;
+
+    const myBatisMapper = require('mybatis-mapper');
+
+    myBatisMapper.createMapper( ['SwToolsMapper.xml'] );
+    
+    let query = myBatisMapper.getStatement(
+        'SwToolsMapper', 
+        'selectSwtool', 
+        { },
+        { language: 'sql', indent: '  '}, 
+    );
+
+    try{
+        // 커넥션 풀
+        pool.getConnection(function(err, con){
+            con.query(
+                query,
+                (error, rows, fields)=>{
+                    if(error) throw error;           
+                    res.send(rows)
+                }
+            );
+            // 쿼리2
+            // 쿼리3
+            // 커넥션 풀에서 연결 제거
+            con.release();
+        })
+       
+    }catch(error){
+        console.log('error', error);
+    }
+} )
 
 module.exports = router;

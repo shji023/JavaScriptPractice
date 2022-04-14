@@ -14,4 +14,9 @@
       from table05
       where id = #{id}
     </select>
+    <select id="selectSwtool">
+      select
+      *
+      from react_swtool
+    </select>
   </mapper>

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { Component } from 'react';
-
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import SoftwareList from './components/SoftwareToolsManage/SoftwareList';
 class App extends Component {
   f1 = ()=>{
       axios.post('/api/Swtool?type=list',{})
@@ -11,10 +12,9 @@ class App extends Component {
 
   render() {
       return (
-          <div>
-              <h3>App</h3>
-              <button onClick={ this.f1 }>버튼1</button>
-          </div>
+        <Routes>
+            <Route path="/" element={<SoftwareList/>}></Route>
+        </Routes>
       );
   }
 }
