@@ -7,6 +7,16 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 var router = express.Router();
+
+const mysql = require('mysql');
+const con = mysql.createConnection({
+  host : "database-1.cziyl6rwn9rl.ap-northeast-2.rds.amazonaws.com",
+  port:"3306",
+  database:"jiyoung",
+  user:'admin',
+  password:'12345678'
+});
+
 //------------------------------------------
 // mybatis
 app.use('/api/Swtool',
@@ -36,12 +46,24 @@ app.use('/api/Swtool',
     // query문장을 작성
     let query = myBatisMapper.getStatement(
       'SwToolsMapper', // namespace설정
-      'selectSwToolsList', // 실행할 쿼리문 id 설정
-      {},
+      'selectOne', // 실행할 쿼리문 id 설정
+      {id:3},
       {language:'sql',indent:'  '}
     );
     console.log(query);
     console.log(2);
+
+    try{
+      con.query(
+        query,
+        (error,rows,fields)=>{
+          console.log(rows);
+          res.send(rows);
+        }
+      );
+    }catch(error){
+      console.log('error: ',error);
+    }
   })
 );
 

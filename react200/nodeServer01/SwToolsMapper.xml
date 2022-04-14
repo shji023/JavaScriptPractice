@@ -6,7 +6,12 @@
     <select id="selectSwToolsList">
       select
       *
-      from
-      table01
+      from table05
+    </select>
+    <select id="selectOne">
+      select
+      *
+      from table05
+      where id = #{id}
     </select>
   </mapper>
