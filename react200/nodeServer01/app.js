@@ -17,10 +17,19 @@ app.use('/api/Swtool',
     if(req.query.type == 'list'){
       req.body.mapper = 'SwToolsMapper';
       req.body.crud = 'select';
-      req.body.mapper_id = 'selectSwToolList';
+      req.body.mapper_id = 'selectSwToolsList';
 
       router.use('/',require('./dbconnect_Module'));
       next('route');
+    }else if(req.query.type == 'save'){
+
+      req.body.mapper = 'SwToolsMapper';//mybatis xml 파일명
+      req.body.crud = 'insert';//select, insert, update, delete 중에 입력
+      req.body.mapper_id = 'insertSwToolsInfo';
+
+      router.use('/', require('./dbconnect_Module'));
+      next('route')
+
     }
   }),
 );
