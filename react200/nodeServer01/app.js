@@ -7,9 +7,18 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 var router = express.Router();
- 
-app.use('/tiger', require('./routes/tiger'));
+//------------------------------------------
+app.use('/api/Swtool',
+  router.post('/',function(req, res, next){
+    console.log(1);
+    next('route');
+  }),
+  router.post('/',function(req, res, next){
+    console.log(2);
+  })
+);
 
+//------------------------------------------
 var port = process.env.PORT || '5000';
 app.listen(port, ()=>{console.log('listen');});
 
