@@ -11,11 +11,11 @@ var router = express.Router();
 app.use('/api/Swtool',
   router.post('/',function(req, res, next){
     console.log(1);
+    router.post('/',function(req, res, next){
+      console.log(2);
+    }),
     next('route');
   }),
-  router.post('/',function(req, res, next){
-    console.log(2);
-  })
 );
 
 //------------------------------------------
