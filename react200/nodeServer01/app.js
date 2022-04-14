@@ -22,6 +22,16 @@ app.use('/api/Swtool',
     console.log(param);
     // p.363 22라인 해석
     console.log(param.mapper+'.xml');
+
+    // p.363 18라인 해석
+    const myBatisMapper = require('mybatis-mapper');
+    console.log(typeof myBatisMapper); // object
+
+    // 외부에서 작성한 파일 로딩하는 역할 (여러개 로딩 가능)
+    myBatisMapper.createMapper(['SwToolsMapper.xml']);
+
+    // 동일 코드
+    // myBatisMapper.createMapper([param.mapper+'.xml']);
     console.log(2);
   })
 );
