@@ -32,6 +32,15 @@ app.use('/api/Swtool',
 
     // 동일 코드
     // myBatisMapper.createMapper([param.mapper+'.xml']);
+
+    // query문장을 작성
+    let query = myBatisMapper.getStatement(
+      'SwToolsMapper', // namespace설정
+      'selectSwToolsList', // 실행할 쿼리문 id 설정
+      {},
+      {language:'sql',indent:'  '}
+    );
+    console.log(query);
     console.log(2);
   })
 );
