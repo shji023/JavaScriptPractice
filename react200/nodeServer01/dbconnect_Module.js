@@ -49,6 +49,7 @@ router.post( '/', function(req, res, next){
             if (req.body.crud == "select"){
               res.send(rows);
             } else {
+              console.log();
               res.send("succ");
             }         
         }

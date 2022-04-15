@@ -1,5 +1,6 @@
-import React, { Component, useEffect } from "react";
+import React, { Component, useEffect,useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import { useLocation } from "react-router";
 import $ from "jquery";
 import Swal from "sweetalert2";
 import axios from "axios";
@@ -7,6 +8,27 @@ import axios from "axios";
 const SoftwareView = ()=>{
   const navigate = useNavigate();
   const match = useParams();
+
+  const location = useLocation();
+  const toolData = location.state;
+  console.log(toolData);
+
+  const [inputData, setInputData] = useState(
+    {is_Swtcode:'',
+    is_Email:'',
+    is_beforeSwtcode:match.swtcode,
+    is_Swt_toolname:'',
+    is_Swt_demo_site:'',
+    is_Giturl:'',
+    is_Comments:'',
+    is_Swt_function:'',}
+  );
+
+  const handleDataChange=(key, value)=>{
+    const tempInputData = {...inputData};
+    tempInputData[key] = value;
+    setInputData(tempInputData);
+  }
 
   const sweetalertSucc = (title, showConfirmButton) => {
     Swal.fire({
@@ -26,7 +48,7 @@ const SoftwareView = ()=>{
       callSwToolInfoApi()
       $('.saveclass').hide()
   }
-  })
+  },[])
 
   const callSwToolInfoApi = async () => {
     axios.post('/api/Swtool?type=list', {
@@ -40,16 +62,24 @@ const SoftwareView = ()=>{
             $('#is_Giturl').val(data.swt_github_url)
             $('#is_Comments').val(data.swt_comments)
             $('#is_Swt_function').val(data.swt_function)
+            const tempInputData = {...inputData};
+            tempInputData['is_Swt_toolname'] = toolData.swt_toolname;
+            tempInputData['is_Swt_demo_site'] = toolData.swt_demo_site;
+            tempInputData['is_Giturl'] = toolData.swt_github_url;
+            tempInputData['is_Comments'] = toolData.swt_comments;
+            tempInputData['is_Swt_function'] = toolData.swt_function;
+            setInputData(tempInputData);
         } catch (error) {
             alert('작업중 오류가 발생하였습니다')
         }
     })
     .catch( error => {alert(error); return false;} );
+    
 }
 
 
   const submitClick = async (type, e) => {
-      console.log("response22222222222222222");
+      console.log("submitClick들어왔다");
       var jsonstr = $("form[name='frm']").serialize();
       jsonstr = decodeURIComponent(jsonstr);
       // var Json_form = JSON.stringify(jsonstr).replace(/\"/gi, "");
@@ -57,8 +87,9 @@ const SoftwareView = ()=>{
       //   '{"' + Json_form.replace(/\&/g, '","').replace(/=/gi, '":"') + '"}';
 
       try {
-        console.log("response22222222222222222");
-        const response2 = await axios.post("/api/Swtool?type=" + type, jsonstr);
+        console.log(jsonstr);
+        console.log(inputData);
+        const response2 = await axios.post("/api/Swtool?type=" + type, inputData);
         console.log(response2);
         if (response2.data === "succ") {
           if (type === "save") {
@@ -118,6 +149,7 @@ const SoftwareView = ()=>{
                             name="is_Swt_toolname"
                             id="is_Swt_toolname"
                             className=""
+                            onChange={(e)=>handleDataChange("is_Swt_toolname",e.target.value)}
                           />
                         </td>
                       </tr>

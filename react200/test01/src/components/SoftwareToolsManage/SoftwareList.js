@@ -51,7 +51,7 @@ class SoftwareList extends Component {
             <td>{data.swt_function}</td>
             <td>{reg_date}</td>
             <td>
-                <Link to={'/softwareview/'+data.swt_code} 
+                <Link to={'/softwareview/'+data.swt_code} state={data} 
                 className="bt_c1 bt_c2 w50_b">수정</Link>
                 <a href="#n" className="bt_c1 w50_b" id={data.swt_code}
                   onClick={(e) => this.deleteSwtool(e)}>삭제</a>
