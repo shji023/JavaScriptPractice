@@ -30,6 +30,17 @@ app.use('/api/Swtool',
       router.use('/', require('./dbconnect_Module'));
       next('route')
 
+    }else if(req.query.type == 'modify'){
+      try {
+        req.body.mapper = 'SwToolsMapper';
+        req.body.crud = 'update';//select, insert, update, delete 중에 입력
+        req.body.mapper_id = 'updateSwToolsInfo';
+        
+        router.use('/', require('./dbconnect_Module'));
+        next('route')
+      } catch (error) {
+        console.log("Module > dbconnect error : "+ error);      
+      }
     }
   }),
 );

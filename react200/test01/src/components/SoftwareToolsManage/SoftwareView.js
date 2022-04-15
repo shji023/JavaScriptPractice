@@ -1,73 +1,73 @@
-import React, { Component } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { Component, useEffect } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import $ from "jquery";
 import Swal from "sweetalert2";
 import axios from "axios";
 
-class SoftwareView extends Component {
-  submitClick = async (type, e) => {
-    const { history } = this.props;
-    this.Swt_toolname_checker = $("#is_Swt_toolname").val();
-    this.Swt_demo_site_checker = $("#is_Swt_demo_site").val();
-    this.Giturl_checker = $("#is_Giturl").val();
-    this.Comments_checker = $("#is_Comments").val();
-    this.Swt_function_checker = $("#is_Swt_function").val();
+const SoftwareView = ()=>{
+  const navigate = useNavigate();
+  const match = useParams();
 
-    this.fnValidate = (e) => {
-      // if (this.Swt_toolname_checker === "") {
-      //   $("#is_Swt_toolname").addClass("border_validate_err");
-      //   alert("툴 이름을 다시 확인해주세요.");
-      //   return false;
-      // }
-      $("#is_Swt_toolname").removeClass("border_validate_err");
+  const sweetalertSucc = (title, showConfirmButton) => {
+    Swal.fire({
+      position: "bottom-end",
+      icon: "success",
+      title: title,
+      showConfirmButton: showConfirmButton,
+      timer: 1000,
+    });
+  };
 
-      // if (this.Swt_demo_site_checker === "") {
-      //   $("#is_Swt_demo_site").addClass("border_validate_err");
-      //   alert("데모 URL을 다시 확인해주세요.");
-      //   return false;
-      // }
-      $("#is_Swt_demo_site").removeClass("border_validate_err");
+  //componentDidMount
+  useEffect(()=>{
+    if(match.swtcode === 'register'){
+      $('.modifyclass').hide()
+  }else{
+      callSwToolInfoApi()
+      $('.saveclass').hide()
+  }
+  })
 
-      // if (this.Giturl_checker === "") {
-      //   $("#is_Giturl").addClass("border_validate_err");
-      //   alert("Github URL을 다시 확인해주세요.");
-      //   return false;
-      // }
-      $("#is_Giturl").removeClass("border_validate_err");
+  const callSwToolInfoApi = async () => {
+    axios.post('/api/Swtool?type=list', {
+        is_Swtcode: match.swtcode,
+    })
+    .then( response => {
+        try {
+            var data = response.data[0]
+            $('#is_Swt_toolname').val(data.swt_toolname)
+            $('#is_Swt_demo_site').val(data.swt_demo_site)
+            $('#is_Giturl').val(data.swt_github_url)
+            $('#is_Comments').val(data.swt_comments)
+            $('#is_Swt_function').val(data.swt_function)
+        } catch (error) {
+            alert('작업중 오류가 발생하였습니다')
+        }
+    })
+    .catch( error => {alert(error); return false;} );
+}
 
-      // if (this.Comments_checker === "") {
-      //   $("#is_Comments").addClass("border_validate_err");
-      //   alert("설명을 다시 확인해주세요.");
-      //   return false;
-      // }
-      $("#is_Comments").removeClass("border_validate_err");
 
-      // if (this.Swt_function_checker === "") {
-      //   $("#is_Swt_function").addClass("border_validate_err");
-      //   alert("상세기능을 다시 확인해주세요.");
-      //   return false;
-      // }
-      $("#is_Swt_function").removeClass("border_validate_err");
-      return true;
-    };
-
-    if (this.fnValidate()) {
+  const submitClick = async (type, e) => {
+      console.log("response22222222222222222");
       var jsonstr = $("form[name='frm']").serialize();
       jsonstr = decodeURIComponent(jsonstr);
-      var Json_form = JSON.stringify(jsonstr).replace(/\"/gi, "");
-      Json_form =
-        '{"' + Json_form.replace(/\&/g, '","').replace(/=/gi, '":"') + '"}';
+      // var Json_form = JSON.stringify(jsonstr).replace(/\"/gi, "");
+      // Json_form =
+      //   '{"' + Json_form.replace(/\&/g, '","').replace(/=/gi, '":"') + '"}';
 
       try {
         console.log("response22222222222222222");
         const response2 = await axios.post("/api/Swtool?type=" + type, jsonstr);
-
+        console.log(response2);
         if (response2.data === "succ") {
           if (type === "save") {
-            this.sweetalertSucc("Software Tools 등록이 완료되었습니다.", false);
-          }
-          setTimeout(function () {
-            history.push('/SoftwareList');
+            sweetalertSucc("Software Tools 등록이 완료되었습니다.", false);
+          }else if(type === "modify"){
+            sweetalertSucc('Software Tools 수정이 완료되었습니다.', false)
+        }
+          setTimeout( ()=> {
+            navigate('/');
             // this.props.navigate('/SoftwareList');
            
           }, 1500);
@@ -79,20 +79,10 @@ class SoftwareView extends Component {
         console.log(12341234);
         alert("작업중 오류가 발생하였습니다.");
       }
-    }
+    
   };
 
-  sweetalertSucc = (title, showConfirmButton) => {
-    Swal.fire({
-      position: "bottom-end",
-      icon: "success",
-      title: title,
-      showConfirmButton: showConfirmButton,
-      timer: 1000,
-    });
-  };
 
-  render() {
     return (
       <section className="sub_wrap">
         <article className="s_cnt mp_pro_li ct1">
@@ -108,6 +98,7 @@ class SoftwareView extends Component {
                 name="is_Email"
                 value="guest"
               />
+              <input id="is_beforeSwtcode" type="hidden" name="is_beforeSwtcode" value={match.swtcode} />
               <article className="res_w">
                 <p className="ment" style={{ textAlign: "right" }}>
                   <span className="red">(*)</span>표시는 필수입력사항 입니다.
@@ -272,11 +263,17 @@ class SoftwareView extends Component {
                       href="#"
                       className="bt_ty bt_ty2 submit_ty1 saveclass"
                       onClick={(e) => {
-                        this.submitClick("save", e);
+                        submitClick("save", e);
                         e.preventDefault();
                       }}
                     >
                       저장
+                    </a>
+                    <a 
+                    href="#" 
+                    className="bt_ty bt_ty2 submit_ty1 modifyclass" 
+                    onClick={(e) => submitClick("modify", e) }>
+                      수정
                     </a>
                   </div>
                 </div>
@@ -287,6 +284,5 @@ class SoftwareView extends Component {
       </section>
     );
   }
-}
 
 export default SoftwareView;

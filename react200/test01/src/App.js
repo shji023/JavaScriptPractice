@@ -8,7 +8,7 @@ class App extends Component {
     return (
       <Routes>
         <Route path="/" element={<SoftwareList/>}></Route>
-        <Route path="/softwareview" element={<SoftwareView/>}></Route>
+        <Route path="/softwareview/:swtcode" element={<SoftwareView/>}></Route>
       </Routes>
     );
   }

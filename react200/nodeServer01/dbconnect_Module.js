@@ -27,7 +27,7 @@ const pool = mysql.createPool({
 
 router.post( '/', function(req, res, next){
   let param = req.body;
-
+  console.log(param);
   const myBatisMapper = require('mybatis-mapper');
 
   myBatisMapper.createMapper( ['SwToolsMapper.xml'] );
