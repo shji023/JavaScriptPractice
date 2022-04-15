@@ -41,6 +41,19 @@ app.use('/api/Swtool',
       } catch (error) {
         console.log("Module > dbconnect error : "+ error);      
       }
+    }else if(req.query.type === 'delete'){
+      //Swtool 삭제
+      try {
+        //Mysql 쿼리 호출정보 입력
+        req.body.mapper = 'SwToolsMapper';//mybatis xml 파일명
+        req.body.crud = 'delete';//select, insert, update, delete 중에 입력
+        req.body.mapper_id = 'deleteSwToolsInfo';
+        
+        router.use('/',  require('./dbconnect_Module'));
+        next('route')
+      } catch (error) {
+        console.log("Module > dbconnect error : "+ error);      
+      }
     }
   }),
 );

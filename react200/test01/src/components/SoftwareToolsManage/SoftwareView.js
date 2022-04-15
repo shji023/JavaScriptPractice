@@ -254,7 +254,7 @@ const SoftwareView = ()=>{
                     style={{ marginBottom: "44px" }}
                   >
                     <Link
-                      to={"/SoftwareList"}
+                      to={"/"}
                       className="bt_ty bt_ty1 cancel_ty1"
                     >
                       취소
