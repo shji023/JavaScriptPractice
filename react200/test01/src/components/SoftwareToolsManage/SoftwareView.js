@@ -11,7 +11,6 @@ const SoftwareView = ()=>{
 
   const location = useLocation();
   const toolData = location.state;
-  console.log(toolData);
 
   const [inputData, setInputData] = useState(
     {is_Swtcode:'',
@@ -74,23 +73,18 @@ const SoftwareView = ()=>{
         }
     })
     .catch( error => {alert(error); return false;} );
-    
 }
-
 
   const submitClick = async (type, e) => {
       console.log("submitClick들어왔다");
-      var jsonstr = $("form[name='frm']").serialize();
-      jsonstr = decodeURIComponent(jsonstr);
+      // var jsonstr = $("form[name='frm']").serialize();
+      // jsonstr = decodeURIComponent(jsonstr);
       // var Json_form = JSON.stringify(jsonstr).replace(/\"/gi, "");
       // Json_form =
       //   '{"' + Json_form.replace(/\&/g, '","').replace(/=/gi, '":"') + '"}';
 
       try {
-        console.log(jsonstr);
-        console.log(inputData);
         const response2 = await axios.post("/api/Swtool?type=" + type, inputData);
-        console.log(response2);
         if (response2.data === "succ") {
           if (type === "save") {
             sweetalertSucc("Software Tools 등록이 완료되었습니다.", false);
@@ -99,8 +93,6 @@ const SoftwareView = ()=>{
         }
           setTimeout( ()=> {
             navigate('/');
-            // this.props.navigate('/SoftwareList');
-           
           }, 1500);
         } else {
           
