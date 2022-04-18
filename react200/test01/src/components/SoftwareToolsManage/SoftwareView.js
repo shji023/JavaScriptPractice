@@ -7,7 +7,7 @@ import axios from "axios";
 
 const SoftwareView = ()=>{
   const navigate = useNavigate();
-  const match = useParams();
+  const match = useParams(); // { swtcode : "register"}
 
   const location = useLocation();
   const toolData = location.state;
