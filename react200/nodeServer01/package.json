@@ -13,6 +13,7 @@
     "jade": "~1.11.0",
     "morgan": "~1.9.1",
     "mybatis-mapper": "^0.6.7",
-    "mysql": "^2.18.1"
+    "mysql": "^2.18.1",
+    "node-cron": "^3.0.0"
   }
 }
