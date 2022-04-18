@@ -47,7 +47,10 @@ router.post( '/', function(req, res, next){
         (error, rows, fields)=>{
             if(error) throw error;  
             if (req.body.crud == "select"){
-              res.send(rows);
+              res.send([
+                {id:1,name:'앵무새1', salary:100,bonus:1000},
+                {id:1,name:'앵무새2', salary:200,bonus:2000}
+              ]);
             } else {
               console.log();
               res.send("succ");
