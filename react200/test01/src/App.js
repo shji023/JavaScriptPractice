@@ -3,13 +3,13 @@ import React, { Component } from 'react';
 
 class App extends Component {
 f1 = ()=>{
-  axios.post('/start',()=>{})
+  axios.post('/start/2',()=>{})
   .then((res)=>{
     console.log(res.data);
   })
 }
 f2 =()=>{
-  axios.post('/stop',()=>{})
+  axios.post('/stop/1',()=>{})
   .then((res)=>{
     console.log(res.data);
   })

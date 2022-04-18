@@ -78,17 +78,28 @@ let task = cron.schedule(
   },
   {scheduled:false}
 );
-app.use('/start',(req,res,next)=>{
-  console.log('start');
-  task.start();
-  res.send('start');
-})
+// 1. routes안에 넣고 require하면 정상작동된다
+app.use('/start',
+  router.post('/1',(req,res,next)=>{
+    console.log(1);
+  })
+);
+app.use('/stop',
+  router.post('/2',(req,res,next)=>{
+    console.log(2);
+  })
+);
+// app.use('/start',(req,res,next)=>{
+//   console.log('start');
+//   task.start();
+//   res.send('start');
+// })
 
-app.use('/stop',(req,res,next)=>{
-  console.log('stop');
-  task.stop();
-  res.send('stop');
-})
+// app.use('/stop',(req,res,next)=>{
+//   console.log('stop');
+//   task.stop();
+//   res.send('stop');
+// })
 
 //------------------------------------------
 var port = process.env.PORT || '5000';
