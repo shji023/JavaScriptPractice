@@ -1,7 +1,7 @@
 // express 모듈을 불러온다.
 const { request } = require('express');
 var express = require('express');
-require("./routes/BatchRout");
+// require("./routes/BatchRout");
 // app변수로 express를 호출한다.
 var app = express();
 
@@ -69,6 +69,27 @@ var router = express.Router();
 //     res.send('OK');
 //   }),
 //   )
+
+let cron = require('node-cron');
+let count = 0;
+let task = cron.schedule(
+  '*/2 * * * * *',()=>{ // 2초
+    console.log(++count);
+  },
+  {scheduled:false}
+);
+app.use('/start',(req,res,next)=>{
+  console.log('start');
+  task.start();
+  res.send('start');
+})
+
+app.use('/stop',(req,res,next)=>{
+  console.log('stop');
+  task.stop();
+  res.send('stop');
+})
+
 //------------------------------------------
 var port = process.env.PORT || '5000';
 app.listen(port, ()=>{console.log('listen');});
