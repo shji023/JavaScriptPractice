@@ -43,7 +43,7 @@ function App() {
         "user":{"alias":name},
         "multiplication":{
           "factorA":factorA,"factorB":factorB
-        },"resultAttempt": answer,"result":result})
+        },"resultAttempt": answer,"result":response2.data})
 
   
     })
